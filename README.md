@@ -1,8 +1,4 @@
 ### Проект «Киноман» 
-`JavaScript` `EcmaScript2016+` `ООП` `Class` `Modules` `Promise` `fetch()` `MVC` `Webpack` `Moment.js` `Контекст`
-
-Запустить проект: `npm start` <br />
-Выполнить сборку: `npm run build` <br />
 #### Техническое задание проекта:
 
 ##### О проекте
