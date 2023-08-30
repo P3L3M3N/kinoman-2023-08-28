@@ -1,6 +1,3 @@
-
-"use strict";
-
 export const createUserRankTmplate = () => {
   return (
     `<section class="header__profile profile">
