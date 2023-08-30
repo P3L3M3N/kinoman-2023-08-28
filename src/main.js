@@ -26,6 +26,16 @@ const createMenuTmplate = () => {
   );
 };
 
+const createSortListTmplate = () => {
+  return (
+    `<ul class="sort">
+    <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
+    <li><a href="#" class="sort__button">Sort by date</a></li>
+    <li><a href="#" class="sort__button">Sort by rating</a></li>
+  </ul>`
+  );
+};
+
 const render = (container, template, count = 1, place = `beforeend`) => {
   for (let i = 0; i < count; i++) {
     container.insertAdjacentHTML(place, template);
@@ -34,3 +44,4 @@ const render = (container, template, count = 1, place = `beforeend`) => {
 
 render(siteHeaderElement, createUserRankTmplate());
 render(siteMainElement, createMenuTmplate());
+render(siteMainElement, createSortListTmplate());
