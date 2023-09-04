@@ -8,6 +8,6 @@ export const createMenuTmplate = () => {
         <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
       </div>
       <a href="#stats" class="main-navigation__additional">Stats</a>
-     </nav>`
+    </nav>`
   );
 };

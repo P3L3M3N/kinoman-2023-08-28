@@ -1,8 +1,12 @@
-import { render } from './utils/utils.js';
-import { createUserRankTmplate } from './layout/user-rank.js';
-import { createMenuTmplate } from './layout/menu.js';
-import { createSortListTmplate } from './layout/sort-list.js';
-import { createUpcomingMoviesTmplate, createMovieCardTemplate, createВuttonShowMoreTemplate } from './layout/upcoming-movies.js'
+import {render} from './utils/utils.js';
+import {createUserRankTmplate} from './layout/user-rank.js';
+import {createMenuTmplate} from './layout/menu.js';
+import {createSortListTmplate} from './layout/sort-list.js';
+import {
+  createUpcomingMoviesTmplate,
+  createMovieCardTemplate,
+  createButtonShowMoreTemplate
+} from './layout/upcoming-movies.js';
 
 const UPCOMING_MOVIES_CARD_COUNT = 5;
 
@@ -18,5 +22,5 @@ const moviesBlockElement = siteMainElement.querySelector(`.films`);
 const moviesListElement = moviesBlockElement.querySelector(`.films-list`);
 const moviesContainerElement = moviesListElement.querySelector(`.films-list__container`);
 
-render(moviesContainerElement, createMovieCardTemplate (), UPCOMING_MOVIES_CARD_COUNT);
-render(moviesListElement, createВuttonShowMoreTemplate ());
+render(moviesContainerElement, createMovieCardTemplate(), UPCOMING_MOVIES_CARD_COUNT);
+render(moviesListElement, createButtonShowMoreTemplate());
