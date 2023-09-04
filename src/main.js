@@ -15,9 +15,7 @@ const siteMainElement = document.querySelector(`.main`);
 
 
 render(siteHeaderElement, createUserRankTemplate());
-render(siteMainElement, createMenuTemplate());
-render(siteMainElement, createSortListTemplate());
-render(siteMainElement, createUpcomingMoviesTemplate());
+render(siteMainElement, [createMenuTemplate(), createSortListTemplate(), createUpcomingMoviesTemplate()]);
 
 const moviesBlockElement = siteMainElement.querySelector(`.films`);
 const moviesListElement = moviesBlockElement.querySelector(`.films-list`);
