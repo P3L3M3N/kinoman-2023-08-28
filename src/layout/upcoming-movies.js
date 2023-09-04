@@ -1,5 +1,5 @@
-export const createUpcomingMoviesTmplate = () => {
-  return (
+export const createUpcomingMoviesTemplate = () => {
+  return (/* html */
     `<section class="films">
         <section class="films-list">
           <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
@@ -11,7 +11,7 @@ export const createUpcomingMoviesTmplate = () => {
 };
 
 export const createMovieCardTemplate = () => {
-  return (
+  return (/* html */
     `<article class="film-card">
       <h3 class="film-card__title">The Man with the Golden Arm</h3>
       <p class="film-card__rating">9.0</p>
@@ -33,7 +33,7 @@ export const createMovieCardTemplate = () => {
 };
 
 export const createButtonShowMoreTemplate = () => {
-  return (
+  return (/* html */
     `<button class="films-list__show-more">Show more</button>`
   );
 };
