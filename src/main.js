@@ -9,15 +9,19 @@ import {
 } from './layout/upcoming-movies.js';
 import {createExtraMoviesTemplate} from './layout/extra-movies.js';
 import {createFooterStatisticTemplate} from './layout/footer-statistic.js';
+// Отключено: попап с информацией о фильме не рендерится в текущей версии.
+// Для включения раскомментируйте следующую строку.
+// import {createMovieInformationTemplate} from './layout/movie-information.js';
 
 const UPCOMING_MOVIES_CARD_COUNT = 5;
 const TOP_RATED_MOVIES_CARD_COUNT = 2;
 const MOST_COMMENTED_MOVIES_CARD_COUNT = 2;
 const FOOTER_MOVIES_COUNT = 130291;
 
-const siteHeaderElement = document.querySelector(`.header`);
-const siteMainElement = document.querySelector(`.main`);
-const siteFooterElement = document.querySelector(`.footer`);
+const siteBodyElement = document.querySelector(`body`);
+const siteHeaderElement = siteBodyElement.querySelector(`.header`);
+const siteMainElement = siteBodyElement.querySelector(`.main`);
+const siteFooterElement = siteBodyElement.querySelector(`.footer`);
 
 render(siteHeaderElement, createUserRankTemplate());
 render(siteMainElement, [createMenuTemplate(), createSortListTemplate(), createUpcomingMoviesTemplate()]);
@@ -43,3 +47,6 @@ render(mostCommentedContainer, new Array(MOST_COMMENTED_MOVIES_CARD_COUNT).fill(
 const footerStatisticElement = siteFooterElement.querySelector(`.footer__statistics`);
 
 render(footerStatisticElement, createFooterStatisticTemplate(FOOTER_MOVIES_COUNT));
+// Отключено: попап с информацией о фильме не рендерится в текущей версии.
+// Для включения раскомментируйте следующую строку.
+// render(siteBodyElement, createMovieInformationTemplate());
