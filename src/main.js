@@ -8,14 +8,16 @@ import {
   createButtonShowMoreTemplate
 } from './layout/upcoming-movies.js';
 import {createExtraMoviesTemplate} from './layout/extra-movies.js';
+import {createFooterStatisticTemplate} from './layout/footer-statistic.js';
 
 const UPCOMING_MOVIES_CARD_COUNT = 5;
 const TOP_RATED_MOVIES_CARD_COUNT = 2;
 const MOST_COMMENTED_MOVIES_CARD_COUNT = 2;
+const FOOTER_MOVIES_COUNT = 130291;
 
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
-
+const siteFooterElement = document.querySelector(`.footer`);
 
 render(siteHeaderElement, createUserRankTemplate());
 render(siteMainElement, [createMenuTemplate(), createSortListTemplate(), createUpcomingMoviesTemplate()]);
@@ -37,3 +39,7 @@ const mostCommentedContainer = moviesBlockElement.querySelectorAll(`.films-list-
 
 render(topRatedContainer, new Array(TOP_RATED_MOVIES_CARD_COUNT).fill(``).map(createMovieCardTemplate));
 render(mostCommentedContainer, new Array(MOST_COMMENTED_MOVIES_CARD_COUNT).fill(``).map(createMovieCardTemplate));
+
+const footerStatisticElement = siteFooterElement.querySelector(`.footer__statistics`);
+
+render(footerStatisticElement, createFooterStatisticTemplate(FOOTER_MOVIES_COUNT));
