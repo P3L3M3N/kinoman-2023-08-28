@@ -6,3 +6,5 @@ export const createExtraMoviesTemplate = (title) => {
     </section>`
   );
 };
+
+

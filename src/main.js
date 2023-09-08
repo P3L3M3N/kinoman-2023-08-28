@@ -4,14 +4,14 @@ import {createMenuTemplate} from './components/menu.js';
 import {createSortListTemplate} from './components/sort-list.js';
 import {
   createUpcomingMoviesTemplate,
-  createMovieCardTemplate,
   createButtonShowMoreTemplate
 } from './components/upcoming-movies.js';
+import {createMovieCardTemplate} from './components/movie-card.js';
 import {createExtraMoviesTemplate} from './components/extra-movies.js';
 import {createFooterStatisticTemplate} from './components/footer-statistic.js';
 // Отключено: попап с информацией о фильме не рендерится в текущей версии.
 // Для включения раскомментируйте следующую строку.
-// import {createMovieInformationTemplate} from './components/movie-information.js';
+// import {createMovieInformationTemplate} from './components/movie-info-popap.js';
 
 const UPCOMING_MOVIES_CARD_COUNT = 5;
 const TOP_RATED_MOVIES_CARD_COUNT = 2;
