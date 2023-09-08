@@ -30,18 +30,15 @@
           файлов в директории `/public/images/posters`;
        - Описание. От **1** до **5** случайных предложений
           из текста: 
-
-         *Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id velit ut tortor pretium viverra suspendisse. Nisi porta lorem mollis aliquam ut porttitor leo a. Et tortor at risus viverra adipiscing at in tellus integer. Dictumst quisque sagittis purus sit amet volutpat. Neque sodales ut etiam sit amet nisl purus. Netus et malesuada fames ac. Amet cursus sit amet dictum sit amet justo donec. Porttitor massa id neque aliquam vestibulum morbi. Hendrerit gravida rutrum quisque non tellus orci ac auctor. Dui id ornare arcu odio. At erat pellentesque adipiscing commodo. Suspendisse faucibus interdum posuere lorem ipsum dolor sit amet consectetur. Quis imperdiet massa tincidunt nunc pulvinar.*
-
+          `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id velit ut tortor pretium viverra suspendisse. Nisi porta lorem mollis aliquam ut porttitor leo a. Et tortor at risus viverra adipiscing at in tellus integer. Dictumst quisque sagittis purus sit amet volutpat. Neque sodales ut etiam sit amet nisl purus. Netus et malesuada fames ac.`
        - Комментарии. От **0** до **5** штук;
-        __Обратите внимание,__ комментарии — это отдельная
+       **Обратите внимание,** комментарии — это отдельная
         структура данных с эмоцией, датой, автором и сообщением,
         а не просто массив строк в структуре фильма.
        - Остальные данные ограничьте самостоятельно.
         Что ещё должно быть в структуре, можно узнать
         из технического задания.
-
-        __Обратите внимание,__ это именно описание структуры данных,
+        **Обратите внимание,** это именно описание структуры данных,
         а не готовый к использованию объект. Ваша задача написать
         функцию, которая как раз будет по этой структуре данных
         создавать и возвращать готовые объекты.
@@ -76,7 +73,7 @@
     в массиве отрисуйте компонент «Подробная информация
     о фильме **(попап)**», а на основе первых **5** из всех
     элементов отрисуйте компонент «Карточка фильма».
-    __Не забудьте__, что показ блоков `«Top rated»` и 
+    **Не забудьте**, что показ блоков `«Top rated»` и 
     `«Mostcommented»` — часть дополнительного задания. 
     Оно выполняется по желанию.
 
