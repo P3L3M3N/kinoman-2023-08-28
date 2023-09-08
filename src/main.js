@@ -1,17 +1,17 @@
-import {render} from './utils/utils.js';
-import {createUserRankTemplate} from './layout/user-rank.js';
-import {createMenuTemplate} from './layout/menu.js';
-import {createSortListTemplate} from './layout/sort-list.js';
+import {render} from './components/utils.js';
+import {createUserRankTemplate} from './components/user-rank.js';
+import {createMenuTemplate} from './components/menu.js';
+import {createSortListTemplate} from './components/sort-list.js';
 import {
   createUpcomingMoviesTemplate,
   createMovieCardTemplate,
   createButtonShowMoreTemplate
-} from './layout/upcoming-movies.js';
-import {createExtraMoviesTemplate} from './layout/extra-movies.js';
-import {createFooterStatisticTemplate} from './layout/footer-statistic.js';
+} from './components/upcoming-movies.js';
+import {createExtraMoviesTemplate} from './components/extra-movies.js';
+import {createFooterStatisticTemplate} from './components/footer-statistic.js';
 // Отключено: попап с информацией о фильме не рендерится в текущей версии.
 // Для включения раскомментируйте следующую строку.
-// import {createMovieInformationTemplate} from './layout/movie-information.js';
+// import {createMovieInformationTemplate} from './components/movie-information.js';
 
 const UPCOMING_MOVIES_CARD_COUNT = 5;
 const TOP_RATED_MOVIES_CARD_COUNT = 2;
