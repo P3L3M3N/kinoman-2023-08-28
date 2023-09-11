@@ -1,4 +1,7 @@
-const createSortButtonTemplate = (text, isActive) => {
+const createSortButtonTemplate = ({
+  text,
+  isActive = false
+}) => {
   return (/* html */
     `<li>
       <a href="#" class="sort__button ${isActive ? `sort__button--active` : ``}">${text}</a>
@@ -9,13 +12,14 @@ const createSortButtonTemplate = (text, isActive) => {
 export const createSortListTemplate = () => {
   const sortButtons = [
     {text: `Sort by default`, isActive: true},
-    {text: `Sort by date`, isActive: false},
-    {text: `Sort by rating`, isActive: false}
+    {text: `Sort by date`},
+    {text: `Sort by rating`}
   ];
 
   const sortButtonsTemplate = sortButtons
-    .map((button) => createSortButtonTemplate(button.text, button.isActive))
-    .join(``);
+  .map((button) => createSortButtonTemplate(button))
+  .join(`\n`);
+
 
   return (/* html */
     `<ul class="sort">
