@@ -19,6 +19,8 @@ import {movieCardsData} from './mock/movie-card-data.js';
 const UPCOMING_MOVIES_CARD_COUNT = 5;
 const TOP_RATED_MOVIES_CARD_COUNT = 2;
 const MOST_COMMENTED_MOVIES_CARD_COUNT = 2;
+const SHOW_MORE_COUNT = 5;
+
 
 const siteBodyElement = document.querySelector(`body`);
 const siteHeaderElement = siteBodyElement.querySelector(`.header`);
@@ -63,6 +65,7 @@ const render = (container, template, movieCardInfo = null, place = `beforeend`) 
 };
 
 render(siteHeaderElement, createUserRankTemplate(watchedMoviesCount));
+
 render(siteMainElement, [
   createMenuTemplate(),
   createSortListTemplate(),
@@ -79,18 +82,41 @@ movieCardsData.slice(0, UPCOMING_MOVIES_CARD_COUNT).forEach((movieCardInfo) => {
 
 render(moviesListElement, createButtonShowMoreTemplate());
 
+let currentShowCount = UPCOMING_MOVIES_CARD_COUNT;
+
+const showMoreMoviesCard = () => {
+  const additionalMoviesCard = movieCardsData.slice(currentShowCount, currentShowCount + SHOW_MORE_COUNT);
+  additionalMoviesCard.forEach((movieCardInfo) => {
+    render(moviesContainerElement, createMovieCardTemplate(movieCardInfo), movieCardInfo);
+  });
+
+  currentShowCount += SHOW_MORE_COUNT;
+
+  if (currentShowCount >= movieCardsData.length) {
+    const showMoreButton = moviesListElement.querySelector(`.films-list__show-more`);
+    if (showMoreButton) {
+      showMoreButton.remove();
+    }
+  }
+};
+
+const showMoreButton = moviesListElement.querySelector(`.films-list__show-more`);
+if (showMoreButton) {
+  showMoreButton.addEventListener(`click`, showMoreMoviesCard);
+}
+
 const topRatedTemplate = createExtraMoviesTemplate(`Top rated`);
 const mostCommentedTemplate = createExtraMoviesTemplate(`Most commented`);
 render(moviesBlockElement, [topRatedTemplate, mostCommentedTemplate]);
 
 const [topRatedContainer, mostCommentedContainer] = moviesBlockElement.querySelectorAll(`.films-list--extra .films-list__container`);
 
-const topRatedMovies = movieCardsData.sort((a, b) => b.rating - a.rating).slice(0, TOP_RATED_MOVIES_CARD_COUNT);
+const topRatedMovies = [...movieCardsData].sort((a, b) => b.rating - a.rating).slice(0, TOP_RATED_MOVIES_CARD_COUNT);
 topRatedMovies.forEach((movieCardInfo) => {
   render(topRatedContainer, createMovieCardTemplate(movieCardInfo), movieCardInfo);
 });
 
-const mostCommentedMovies = movieCardsData.sort((a, b) => b.comments.length - a.comments.length).slice(0, MOST_COMMENTED_MOVIES_CARD_COUNT);
+const mostCommentedMovies = [...movieCardsData].sort((a, b) => b.comments.length - a.comments.length).slice(0, MOST_COMMENTED_MOVIES_CARD_COUNT);
 mostCommentedMovies.forEach((movieCardInfo) => {
   render(mostCommentedContainer, createMovieCardTemplate(movieCardInfo), movieCardInfo);
 });
@@ -114,5 +140,3 @@ const closePopupOnClick = (evt) => {
 
 siteBodyElement.addEventListener(`keydown`, (evt) => onEscKeyDown(evt, closeMoviePopup));
 siteBodyElement.addEventListener(`click`, closePopupOnClick);
-
-

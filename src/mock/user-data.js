@@ -10,11 +10,11 @@ export const generateUserRank = (watchedMoviesCount) => {
   }
 };
 
-export const generateIsWatched = () => {
+const generateIsWatched = () => {
   return Math.random() > 0.8;
 };
 
-export const generateWatchedMoviesCount = () => {
+const generateWatchedMoviesCount = () => {
   let watchedMoviesCount = 0;
   for (let i = 0; i < 100; i++) {
     if (generateIsWatched()) {
