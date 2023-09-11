@@ -106,7 +106,19 @@ const movieGenres = [
   `Horror`,
   `Adventure`,
   `Fantasy`,
-  `Romance`
+  `Western`
+];
+
+const movieOtherGenres = [
+  `Documentary`,
+  `Biography`,
+  `Animation`,
+  `Musical`,
+  `Western`,
+  `Mystery`,
+  `Romance`,
+  `Sci-Fi`,
+  `War`,
 ];
 
 const movieDescriptions = [
@@ -176,7 +188,8 @@ const generateMovieCard = () => {
     releaseDate: randomDateObject.fullDate,
     duration: `${getRandomInt(1, 2)}h ${getRandomInt(0, 59)}m`,
     country: getRandomElement(movieCountries),
-    genre: getRandomArray(movieGenres, 3).join(`, `),
+    genre: getRandomElement(movieGenres),
+    otherGenre: getRandomArray(movieOtherGenres, 2).join(`, `),
     description: getRandomArray(movieDescriptions, 5).join(` `),
     comments: Array.from({length: getRandomInt(0, 5)}, generatePopapComment)
   };

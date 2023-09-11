@@ -44,3 +44,16 @@ export const getRandomArray = (array, n) => {
 
   return shuffled.slice(0, arrayLength);
 };
+
+/**
+ * Обработчик событий для клавиши "Escape"
+ *
+ * @param {KeyboardEvent} evt - Объект события клавиши.
+ * @param {Function} action - Функция, которая будет вызвана при нажатии клавиши "Escape"
+ */
+export const onEscKeyDown = (evt, action) => {
+  if (evt.key === `Escape` || evt.key === `Esc`) {
+    action();
+  }
+};
+

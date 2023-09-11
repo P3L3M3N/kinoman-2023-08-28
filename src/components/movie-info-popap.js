@@ -10,6 +10,7 @@ export const createMovieInformationTemplate = ({
   duration,
   country,
   genre,
+  otherGenre,
   description,
   comments = []
 }) => {
@@ -67,7 +68,7 @@ export const createMovieInformationTemplate = ({
             <tr class="film-details__row">
               <td class="film-details__term">Genres</td>
               <td class="film-details__cell">
-                <span class="film-details__genre">${genre}</span>
+                <span class="film-details__genre">${genre}, ${otherGenre}</span>
               </td>
             </tr>
           </table>
@@ -155,5 +156,3 @@ export const createMovieInfoCommentsTemplate = ({
   </li>`
   );
 };
-
-

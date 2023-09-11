@@ -12,6 +12,7 @@ import {
   createMovieInformationTemplate,
   createMovieInfoCommentsTemplate
 } from './components/movie-info-popap.js';
+import {onEscKeyDown} from './utils.js';
 import {movieCardsData} from './mock/movie-card-data.js';
 
 const UPCOMING_MOVIES_CARD_COUNT = 5;
@@ -51,16 +52,22 @@ const render = (container, template, movieCardInfo = null, place = `beforeend`) 
 
       const comments = movieCardInfo.comments;
       const renderedComments = comments.map(createMovieInfoCommentsTemplate).join(`\n`);
-      const commentsListElement = document.querySelector(`.film-details__comments-list`);
+      const commentsListElement = siteBodyElement.querySelector(`.film-details__comments-list`);
       if (commentsListElement) {
         commentsListElement.insertAdjacentHTML(`beforeend`, renderedComments);
       }
+
+      siteBodyElement.addEventListener(`keydown`, onEscKeyDown);
     });
   }
 };
 
 render(siteHeaderElement, createUserRankTemplate());
-render(siteMainElement, [createMenuTemplate(), createSortListTemplate(), createUpcomingMoviesTemplate()]);
+render(siteMainElement, [
+  createMenuTemplate(),
+  createSortListTemplate(),
+  createUpcomingMoviesTemplate()
+]);
 
 const moviesBlockElement = siteMainElement.querySelector(`.films`);
 const moviesListElement = moviesBlockElement.querySelector(`.films-list`);
@@ -91,9 +98,19 @@ mostCommentedMovies.forEach((movieCardInfo) => {
 const footerStatisticElement = siteFooterElement.querySelector(`.footer__statistics`);
 render(footerStatisticElement, createFooterStatisticTemplate(FOOTER_MOVIES_COUNT));
 
-siteBodyElement.addEventListener(`click`, (event) => {
-  if (event.target.matches(`.film-details__close-btn`)) {
-    document.querySelector(`.film-details`).remove();
+const closeMoviePopup = () => {
+  const popupElement = siteBodyElement.querySelector(`.film-details`);
+  if (popupElement) {
+    popupElement.remove();
+    siteBodyElement.removeEventListener(`keydown`, onEscKeyDown);
   }
-});
+};
 
+const closePopupOnClick = (evt) => {
+  if (evt.target.matches(`.film-details__close-btn`)) {
+    closeMoviePopup();
+  }
+};
+
+siteBodyElement.addEventListener(`keydown`, (evt) => onEscKeyDown(evt, closeMoviePopup));
+siteBodyElement.addEventListener(`click`, closePopupOnClick);
