@@ -1,4 +1,5 @@
 import {createUserRankTemplate} from './components/user-rank.js';
+import {watchedMoviesCount} from './mock/user-data.js';
 import {createMenuTemplate} from './components/menu.js';
 import {createSortListTemplate} from './components/sort-list.js';
 import {
@@ -18,7 +19,6 @@ import {movieCardsData} from './mock/movie-card-data.js';
 const UPCOMING_MOVIES_CARD_COUNT = 5;
 const TOP_RATED_MOVIES_CARD_COUNT = 2;
 const MOST_COMMENTED_MOVIES_CARD_COUNT = 2;
-const FOOTER_MOVIES_COUNT = 130291;
 
 const siteBodyElement = document.querySelector(`body`);
 const siteHeaderElement = siteBodyElement.querySelector(`.header`);
@@ -62,7 +62,7 @@ const render = (container, template, movieCardInfo = null, place = `beforeend`) 
   }
 };
 
-render(siteHeaderElement, createUserRankTemplate());
+render(siteHeaderElement, createUserRankTemplate(watchedMoviesCount));
 render(siteMainElement, [
   createMenuTemplate(),
   createSortListTemplate(),
@@ -96,7 +96,7 @@ mostCommentedMovies.forEach((movieCardInfo) => {
 });
 
 const footerStatisticElement = siteFooterElement.querySelector(`.footer__statistics`);
-render(footerStatisticElement, createFooterStatisticTemplate(FOOTER_MOVIES_COUNT));
+render(footerStatisticElement, createFooterStatisticTemplate(movieCardsData.length));
 
 const closeMoviePopup = () => {
   const popupElement = siteBodyElement.querySelector(`.film-details`);
@@ -114,3 +114,5 @@ const closePopupOnClick = (evt) => {
 
 siteBodyElement.addEventListener(`keydown`, (evt) => onEscKeyDown(evt, closeMoviePopup));
 siteBodyElement.addEventListener(`click`, closePopupOnClick);
+
+
