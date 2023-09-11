@@ -175,22 +175,26 @@ const movieCommentDates = [
 ];
 
 const generateMovieCard = () => {
-  const randomDateObject = getRandomElement(movieReleasDates);
+  const {year, fullDate} = getRandomElement(movieReleasDates);
+  const fullDescription = getRandomArray(movieDescriptions, 5).join(` `);
+  const limitedDescription = fullDescription.length > 140 ? fullDescription.slice(0, 139) + `…` : fullDescription;
+
   return {
     title: getRandomElement(movieTitles),
     poster: `./images/posters/${getRandomElement(moviePosters)}`,
-    year: randomDateObject.year,
+    year,
     ageLimit: getRandomElement(movieAgeLimits),
     rating: getRandomFloat(0, 10),
     director: getRandomElement(movieDirectors),
     writers: getRandomArray(movieWriters, 3).join(`, `),
     actors: getRandomArray(movieActors, 3).join(`, `),
-    releaseDate: randomDateObject.fullDate,
+    releaseDate: fullDate,
     duration: `${getRandomInt(1, 2)}h ${getRandomInt(0, 59)}m`,
     country: getRandomElement(movieCountries),
     genre: getRandomElement(movieGenres),
     otherGenre: getRandomArray(movieOtherGenres, 2).join(`, `),
-    description: getRandomArray(movieDescriptions, 5).join(` `),
+    description: limitedDescription,
+    fullDescription,
     comments: Array.from({length: getRandomInt(0, 5)}, generatePopapComment)
   };
 };
@@ -201,6 +205,7 @@ const generatePopapComment = () => ({
   author: getRandomElement(movieCommentAuthors),
   date: getRandomElement(movieCommentDates)
 });
+
 
 export const movieCardsData = Array.from({length: getRandomInt(15, 20)}, generateMovieCard);
 

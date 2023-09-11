@@ -11,7 +11,7 @@ export const createMovieInformationTemplate = ({
   country,
   genre,
   otherGenre,
-  description,
+  fullDescription,
   comments = []
 }) => {
   return (/* html */
@@ -74,7 +74,7 @@ export const createMovieInformationTemplate = ({
           </table>
 
             <p class="film-details__film-description">
-              ${description}
+              ${fullDescription}
             </p>
           </div>
         </div>
