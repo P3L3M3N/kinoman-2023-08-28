@@ -1,10 +1,8 @@
-export const createExtraMoviesTemplate = (titleExtraMovies) => {
+export const createExtraMoviesTemplate = (title) => {
   return (/* html */
     `<section class="films-list--extra">
-      <h2 class="films-list__title">${titleExtraMovies}</h2>
+      <h2 class="films-list__title">${title}</h2>
       <div class="films-list__container"></div>
     </section>`
   );
 };
-
-
