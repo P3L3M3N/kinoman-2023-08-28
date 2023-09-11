@@ -1,12 +1,8 @@
-/**
- * Создаёт HTML-шаблон для пункта меню.
- *
- * @param {string} name - Название пункта меню.
- * @param {?number} [count=null] - Количество элементов, связанных с пунктом меню (null, если пкнкт не имеет элементов).
- * @param {boolean} [isActive=false] - Указывает, активен ли пункт меню. По умолчанию "false".
- * @return {string} HTML-шаблон пункта меню.
- */
-const createMenuItemTemplate = (name, count = null, isActive = false) => {
+const createMenuItemTemplate = ({
+  name,
+  count = null,
+  isActive = false
+}) => {
   return (/* html */
     `<a href="#" class="main-navigation__item ${isActive ? `main-navigation__item--active` : ``}">
       ${name} ${count !== null ? `<span class="main-navigation__item-count">${count}</span>` : ``}
@@ -23,8 +19,8 @@ export const createMenuTemplate = () => {
   ];
 
   const menuItemsTemplate = menuItems
-    .map((item) => createMenuItemTemplate(item.name, item.count, item.isActive))
-    .join(``);
+    .map(createMenuItemTemplate)
+    .join(`\n`);
 
   return (/* html */
     `<nav class="main-navigation">
@@ -35,4 +31,3 @@ export const createMenuTemplate = () => {
     </nav>`
   );
 };
-
