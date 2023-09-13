@@ -3,8 +3,11 @@ import {
   getRandomFloat,
   getRandomElement,
   getRandomArray,
+  getRandomDate,
 } from '../utils.js';
+import {generatePopapComment} from './movie-comment-data.js';
 
+const START_MOVIE_YEAR = 1930;
 
 const movieTitles = [
   `Made for Each`,
@@ -79,16 +82,6 @@ const movieActors = [
   `Christian Bale`
 ];
 
-const movieReleasDates = [
-  {fullDate: `30 March 1945`, year: `1945`},
-  {fullDate: `12 November 1971`, year: `1971`},
-  {fullDate: `25 December 1993`, year: `1993`},
-  {fullDate: `16 July 1965`, year: `1965`},
-  {fullDate: `19 December 1983`, year: `1983`},
-  {fullDate: `1 October 1974`, year: `1974`},
-  {fullDate: `15 December 1979`, year: `1979`}
-];
-
 const movieCountries = [
   `USA`,
   `Canada`,
@@ -132,63 +125,20 @@ const movieDescriptions = [
   `Netus et malesuada fames ac.`
 ];
 
-const movieEmojis = [
-  `smile`,
-  `sleeping`,
-  `puke`,
-  `angry`
-];
-
-const movieCommentMessages = [
-  `So confusing, I was trying to keep up with the plot.`,
-  `Captivating story and excellent performances`,
-  `Yawn-inducing from start to finish`,
-  `The pacing was absolutely perfect`,
-  `Why did this need to be so long?`,
-  `Such a waste of talented actors`,
-  `Feels outdated and irrelevant`,
-  `A timeless classic for sure`,
-  `A visual masterpiece!`,
-  `Not my cup of tea`
-];
-
-const movieCommentAuthors = [
-  `Cinephile42`,
-  `MovieBuff1995`,
-  `ScreenQueen`,
-  `FilmFanatic`,
-  `PopcornLover`,
-  `SilverScreenAddict`,
-  `ReelLifeCritic`
-];
-
-const movieCommentDates = [
-  `Jast now`,
-  `45 minutes ago`,
-  `6 hours ago`,
-  `Yesterday`,
-  `2 days ago`,
-  `2020/05/18 16:20`,
-  `2021/11/11 00:01`,
-  `2022/07/08 04:20`,
-  `2022/12/31 23:59`
-];
-
 const generateMovieCard = () => {
-  const {year, fullDate} = getRandomElement(movieReleasDates);
+  const generatedDate = getRandomDate(START_MOVIE_YEAR, new Date());
   const fullDescription = getRandomArray(movieDescriptions, 5).join(` `);
   const limitedDescription = fullDescription.length > 140 ? fullDescription.slice(0, 139) + `…` : fullDescription;
 
   return {
     title: getRandomElement(movieTitles),
     poster: `./images/posters/${getRandomElement(moviePosters)}`,
-    year,
     ageLimit: getRandomElement(movieAgeLimits),
     rating: getRandomFloat(0, 10),
     director: getRandomElement(movieDirectors),
     writers: getRandomArray(movieWriters, 3).join(`, `),
     actors: getRandomArray(movieActors, 3).join(`, `),
-    releaseDate: fullDate,
+    releaseDate: generatedDate,
     duration: `${getRandomInt(1, 2)}h ${getRandomInt(0, 59)}m`,
     country: getRandomElement(movieCountries),
     genre: getRandomElement(movieGenres),
@@ -198,14 +148,6 @@ const generateMovieCard = () => {
     comments: Array.from({length: getRandomInt(0, 5)}, generatePopapComment)
   };
 };
-
-const generatePopapComment = () => ({
-  emoji: getRandomElement(movieEmojis),
-  message: getRandomElement(movieCommentMessages),
-  author: getRandomElement(movieCommentAuthors),
-  date: getRandomElement(movieCommentDates)
-});
-
 
 export const movieCardsData = Array.from({length: getRandomInt(15, 20)}, generateMovieCard);
 

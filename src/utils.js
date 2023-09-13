@@ -1,3 +1,6 @@
+const START_YEAR_DAY = 1;
+const START_YEAR_MONTH = 0;
+const RANDOM_SORT_THRESHOLD = 0.5;
 
 /**
  * Возвращает случайное целое число между min и max (включительно).
@@ -27,33 +30,113 @@ export const getRandomFloat = (min, max, precision = 1) => parseFloat((Math.rand
 export const getRandomElement = (array) => array[getRandomInt(0, array.length - 1)];
 
 /**
- * Возвращает случайный подмассив из заданного массива в виде строки.
+ * Генерирует случайную дату между заданными годами.
  *
- * @param {Array} array - Массив, из которого нужно выбрать элементы.
- * @param {number} n - Максимальное количество элементов в подмассиве.
- * @return {string} Строка, состоящая из случайных элементов исходного массива.
+ * @param {number} [startYear=new Date().getFullYear()] - Начальный год для генерации случайной даты.
+ * @param {Date} [endDateTime=new Date()] - Конечная дата и время для генерации случайной даты.
+ * @return {Date} Случайная дата между заданными годами.
  */
-export const getRandomArray = (array, n) => {
-  const shuffled = [...array];
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+export const getRandomDate = (startYear = new Date().getFullYear(), endDateTime = new Date()) => {
+  const start = new Date(startYear, START_YEAR_MONTH, START_YEAR_DAY);
+  return new Date(start.getTime() + Math.random() * (endDateTime.getTime() - start.getTime()));
+};
+
+/**
+ * Форматирует объект Date в строку в соответствии с заданным форматом.
+ *
+ * @param {Date} date - Объект Date, который нужно отформатировать.
+ * @param {Object} formatOptions - Объект с параметрами форматирования.
+ * @return {string} Отформатированная строка с датой.
+ */
+export const formatDate = (date, formatOptions) => {
+  return assembleDate(date, formatOptions);
+};
+
+/**
+ * Собирает отформатированную дату из объекта Date и опций форматирования.
+ *
+ * @param {Date} date - Объект Date, который нужно отформатировать.
+ * @param {Object} options - Объект с параметрами форматирования.
+ * @return {string} Отформатированная строка с датой.
+ */
+const assembleDate = (date, options) => {
+
+  let assembledDate = ``;
+
+  if (options.day) {
+    assembledDate += `${date.getDate()} `;
   }
 
-  const arrayLength = Math.floor(Math.random() * n) + 1;
+  if (options.month) {
+    assembledDate += `${date.toLocaleString(`en-US`, {month: `long`})} `;
+  }
+
+  if (options.year) {
+    assembledDate += `${date.getFullYear()} `;
+  }
+
+  return assembledDate.trim();
+};
+
+/**
+ * Возвращает перемешанный массив на основе исходного.
+ *
+ * @param {Array} array - Исходный массив.
+ * @return {Array} Перемешанный массив.
+ */
+export const toShuffledArray = (array) => {
+
+  return [...array].sort(() => Math.random() - RANDOM_SORT_THRESHOLD);
+};
+
+/**
+ * Возвращает случайный подмассив из заданного массива с заданным максимальным количеством элементов.
+ *
+ * @param {Array} array - Исходный массив.
+ * @param {number} n - Максимальное количество элементов в подмассиве.
+ * @return {Array} Подмассив, состоящий из случайных элементов исходного массива.
+ */
+export const getRandomArray = (array, n) => {
+  const shuffled = toShuffledArray(array);
+  const arrayLength = getRandomInt(1, n);
 
   return shuffled.slice(0, arrayLength);
 };
 
 /**
- * Обработчик событий для клавиши "Escape"
+ * Возвращает случайный подмассив заданного массива.
  *
- * @param {KeyboardEvent} evt - Объект события клавиши.
- * @param {Function} action - Функция, которая будет вызвана при нажатии клавиши "Escape"
+ * @param {Array} array - Исходный массив.
+ * @param {number} [n=array.length - 1] - Индекс, до которого будет производиться вырезание.
+ * @return {Array} Подмассив, вырезанный из исходного массива.
+ */
+export const getRandomSubarray = (array, n = array.length - 1) => {
+
+  return array.slice(getRandomInt(n - 1), getRandomInt(n));
+};
+
+/**
+ * Обрабатывает событие нажатия клавиши Escape.
+ *
+ * @param {Event} evt - Событие.
+ * @param {Function} action - Действие для выполнения.
+ * @return {void}
  */
 export const onEscKeyDown = (evt, action) => {
-  if (evt.key === `Escape` || evt.key === `Esc`) {
+
+  return onKeyDown(evt, action, `Escape`, `Esc`);
+};
+
+/**
+ * Общий обработчик нажатия клавиш.
+ *
+ * @param {Event} evt - Событие.
+ * @param {Function} action - Функция, которая будет вызвана при срабатывании события.
+ * @param {...string} keys - Клавиши, на которые нужно реагировать.
+ * @return {void}
+ */
+export const onKeyDown = (evt, action, ...keys) => {
+  if (keys.includes(evt.key)) {
     action();
   }
 };
-

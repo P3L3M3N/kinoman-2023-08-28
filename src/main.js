@@ -9,10 +9,8 @@ import {
 import {createMovieCardTemplate} from './components/movie-card.js';
 import {createExtraMoviesTemplate} from './components/extra-movies.js';
 import {createFooterStatisticTemplate} from './components/footer-statistic.js';
-import {
-  createMovieInformationTemplate,
-  createMovieInfoCommentsTemplate
-} from './components/movie-info-popap.js';
+import {createMovieInformationTemplate} from './components/movie-card-popap.js';
+import {createMovieInfoCommentsTemplate} from './components/movie-coment.js';
 import {onEscKeyDown} from './utils.js';
 import {movieCardsData} from './mock/movie-card-data.js';
 
