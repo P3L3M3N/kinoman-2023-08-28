@@ -1,6 +1,8 @@
 const START_YEAR_DAY = 1;
 const START_YEAR_MONTH = 0;
 const RANDOM_SORT_THRESHOLD = 0.5;
+const MIN_HOURS = 1;
+const MINUTES_IN_HOUR = 60;
 
 /**
  * Возвращает случайное целое число между min и max (включительно).
@@ -38,6 +40,7 @@ export const getRandomElement = (array) => array[getRandomInt(0, array.length - 
  */
 export const getRandomDate = (startYear = new Date().getFullYear(), endDateTime = new Date()) => {
   const start = new Date(startYear, START_YEAR_MONTH, START_YEAR_DAY);
+
   return new Date(start.getTime() + Math.random() * (endDateTime.getTime() - start.getTime()));
 };
 
@@ -48,9 +51,7 @@ export const getRandomDate = (startYear = new Date().getFullYear(), endDateTime 
  * @param {Object} formatOptions - Объект с параметрами форматирования.
  * @return {string} Отформатированная строка с датой.
  */
-export const formatDate = (date, formatOptions) => {
-  return assembleDate(date, formatOptions);
-};
+export const getFormatDate = (date, formatOptions) => assembleDate(date, formatOptions);
 
 /**
  * Собирает отформатированную дату из объекта Date и опций форматирования.
@@ -60,22 +61,21 @@ export const formatDate = (date, formatOptions) => {
  * @return {string} Отформатированная строка с датой.
  */
 const assembleDate = (date, options) => {
-
-  let assembledDate = ``;
+  const assembledDate = [];
 
   if (options.day) {
-    assembledDate += `${date.getDate()} `;
+    assembledDate.push(date.getDate());
   }
 
   if (options.month) {
-    assembledDate += `${date.toLocaleString(`en-US`, {month: `long`})} `;
+    assembledDate.push(date.toLocaleString(`en-US`, {month: `long`}));
   }
 
   if (options.year) {
-    assembledDate += `${date.getFullYear()} `;
+    assembledDate.push(date.getFullYear());
   }
 
-  return assembledDate.trim();
+  return assembledDate.join(` `);
 };
 
 /**
@@ -84,10 +84,7 @@ const assembleDate = (date, options) => {
  * @param {Array} array - Исходный массив.
  * @return {Array} Перемешанный массив.
  */
-export const toShuffledArray = (array) => {
-
-  return [...array].sort(() => Math.random() - RANDOM_SORT_THRESHOLD);
-};
+export const toShuffledArray = (array) => [...array].sort(() => Math.random() - RANDOM_SORT_THRESHOLD);
 
 /**
  * Возвращает случайный подмассив из заданного массива с заданным максимальным количеством элементов.
@@ -96,23 +93,11 @@ export const toShuffledArray = (array) => {
  * @param {number} n - Максимальное количество элементов в подмассиве.
  * @return {Array} Подмассив, состоящий из случайных элементов исходного массива.
  */
-export const getRandomArray = (array, n) => {
+export const getRandomSubarray = (array, n) => {
   const shuffled = toShuffledArray(array);
   const arrayLength = getRandomInt(1, n);
 
   return shuffled.slice(0, arrayLength);
-};
-
-/**
- * Возвращает случайный подмассив заданного массива.
- *
- * @param {Array} array - Исходный массив.
- * @param {number} [n=array.length - 1] - Индекс, до которого будет производиться вырезание.
- * @return {Array} Подмассив, вырезанный из исходного массива.
- */
-export const getRandomSubarray = (array, n = array.length - 1) => {
-
-  return array.slice(getRandomInt(n - 1), getRandomInt(n));
 };
 
 /**
@@ -122,10 +107,7 @@ export const getRandomSubarray = (array, n = array.length - 1) => {
  * @param {Function} action - Действие для выполнения.
  * @return {void}
  */
-export const onEscKeyDown = (evt, action) => {
-
-  return onKeyDown(evt, action, `Escape`, `Esc`);
-};
+export const onEscKeyDown = (evt, action) => onKeyDown(evt, action, `Escape`, `Esc`);
 
 /**
  * Общий обработчик нажатия клавиш.
@@ -139,4 +121,17 @@ export const onKeyDown = (evt, action, ...keys) => {
   if (keys.includes(evt.key)) {
     action();
   }
+};
+
+/**
+ * Форматирует продолжительность в минутах в строку формата "Xh Ym".
+ *
+ * @param {number} durationMinutes - Продолжительность в минутах.
+ * @return {string} Отформатированная строка с продолжительностью.
+ */
+export const getFormatDuration = (durationMinutes) => {
+  const hours = Math.max(MIN_HOURS, Math.floor(durationMinutes / MINUTES_IN_HOUR));
+  const minutes = durationMinutes % MINUTES_IN_HOUR;
+
+  return `${hours}h ${minutes}m`;
 };

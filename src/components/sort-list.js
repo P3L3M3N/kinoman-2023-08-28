@@ -1,29 +1,28 @@
 const createSortButtonTemplate = ({
-  text,
-  isActive = false
+  sortType,
+  isActive
 }) => {
   return (/* html */
-    `<li>
-      <a href="#" class="sort__button ${isActive ? `sort__button--active` : ``}">${text}</a>
-    </li>`
+    `<li><a href="#" class="sort__button ${isActive ? `sort__button--active` : ``}">${sortType}</a></li>`
   );
 };
 
 export const createSortListTemplate = () => {
-  const sortButtons = [
-    {text: `Sort by default`, isActive: true},
-    {text: `Sort by date`},
-    {text: `Sort by rating`}
-  ];
-
-  const sortButtonsTemplate = sortButtons
-  .map((button) => createSortButtonTemplate(button))
-  .join(`\n`);
-
-
+  const sortButtons = sortOptions.map(createSortButtonTemplate).join(``);
   return (/* html */
     `<ul class="sort">
-      ${sortButtonsTemplate}
+      ${sortButtons}
     </ul>`
   );
 };
+
+const sortOptions = [{
+  sortType: `Sort by default`,
+  isActive: true
+}, {
+  sortType: `Sort by date`,
+  isActive: false
+}, {
+  sortType: `Sort by rating`,
+  isActive: false
+}];

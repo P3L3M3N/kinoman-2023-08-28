@@ -1,5 +1,5 @@
 import {
-  formatDate
+  getFormatDate
 } from '../utils.js';
 
 export const createMovieInfoCommentsTemplate = ({
@@ -17,7 +17,7 @@ export const createMovieInfoCommentsTemplate = ({
       <p class="film-details__comment-text">${message}</p>
       <p class="film-details__comment-info">
         <span class="film-details__comment-author">${author}</span>
-        <span class="film-details__comment-day">${formatDate(date, {day: true, month: true, year: true})}</td></span>
+        <span class="film-details__comment-day">${getFormatDate(date, {day: true, month: true, year: true})}</td></span>
         <button class="film-details__comment-delete">Delete</button>
       </p>
     </div>

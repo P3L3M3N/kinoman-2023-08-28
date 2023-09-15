@@ -2,10 +2,10 @@ import {
   getRandomInt,
   getRandomFloat,
   getRandomElement,
-  getRandomArray,
+  getRandomSubarray,
   getRandomDate,
 } from '../utils.js';
-import {generatePopapComment} from './movie-comment-data.js';
+import {generateCommentsArray} from './movie-comment-data.js';
 
 const START_MOVIE_YEAR = 1930;
 
@@ -16,7 +16,10 @@ const movieTitles = [
   `Santa Claus`,
   `Dance of Life`,
   `Great Flamarion`,
-  `Golden Arm`
+  `Golden Arm`,
+  `Sky Warriors`,
+  `Lost Voyage`,
+  `Moon Quest`
 ];
 
 const moviePosters = [
@@ -30,11 +33,11 @@ const moviePosters = [
 ];
 
 const movieAgeLimits = [
-  `0+`,
-  `6+`,
-  `12+`,
-  `16+`,
-  `18+`
+  `0`,
+  `6`,
+  `12`,
+  `16`,
+  `18`
 ];
 
 const movieDirectors = [
@@ -44,11 +47,13 @@ const movieDirectors = [
   `Christopher Nolan`,
   `James Cameron`,
   `Francis Ford Coppola`,
-  `Clint Eastwood`
+  `Clint Eastwood`,
+  `Peter Jackson`,
+  `Alfred Hitchcock`,
+  `Stanley Kubrick`,
 ];
 
 const movieWriters = [
-  `Aaron Sorkin`,
   `William Goldman`,
   `Charlie Kaufman`,
   `Quentin Tarantino`,
@@ -56,30 +61,22 @@ const movieWriters = [
   `Joel Coen`,
   `Ethan Coen`,
   `Nora Ephron`,
-  `Paul Thomas Anderson`,
   `Oliver Stone`,
-  `John Hughes`,
-  `David Mamet`,
-  `Paddy Chayefsky`,
   `Robert Towne`,
   `Billy Wilder`
 ];
+
 const movieActors = [
   `Robert De Niro`,
-  `Meryl Streep`,
   `Tom Hanks`,
   `Denzel Washington`,
   `Leonardo DiCaprio`,
-  `Cate Blanchett`,
   `Morgan Freeman`,
-  `Natalie Portman`,
   `Brad Pitt`,
   `Julianne Moore`,
   `Johnny Depp`,
   `Kate Winslet`,
-  `Joaquin Phoenix`,
   `Nicole Kidman`,
-  `Christian Bale`
 ];
 
 const movieCountries = [
@@ -97,21 +94,11 @@ const movieGenres = [
   `Action`,
   `Thriller`,
   `Horror`,
-  `Adventure`,
   `Fantasy`,
-  `Western`
-];
-
-const movieOtherGenres = [
-  `Documentary`,
-  `Biography`,
-  `Animation`,
-  `Musical`,
   `Western`,
-  `Mystery`,
-  `Romance`,
+  `Animation`,
+  `History`,
   `Sci-Fi`,
-  `War`,
 ];
 
 const movieDescriptions = [
@@ -127,27 +114,26 @@ const movieDescriptions = [
 
 const generateMovieCard = () => {
   const generatedDate = getRandomDate(START_MOVIE_YEAR, new Date());
-  const fullDescription = getRandomArray(movieDescriptions, 5).join(` `);
-  const limitedDescription = fullDescription.length > 140 ? fullDescription.slice(0, 139) + `…` : fullDescription;
+  const randomGenres = getRandomSubarray(movieGenres, 3);
 
   return {
     title: getRandomElement(movieTitles),
-    poster: `./images/posters/${getRandomElement(moviePosters)}`,
+    posterLink: `${getRandomElement(moviePosters)}`,
     ageLimit: getRandomElement(movieAgeLimits),
     rating: getRandomFloat(0, 10),
     director: getRandomElement(movieDirectors),
-    writers: getRandomArray(movieWriters, 3).join(`, `),
-    actors: getRandomArray(movieActors, 3).join(`, `),
+    writers: getRandomSubarray(movieWriters, 3),
+    actors: getRandomSubarray(movieActors, 3),
     releaseDate: generatedDate,
-    duration: `${getRandomInt(1, 2)}h ${getRandomInt(0, 59)}m`,
+    duration: `${getRandomInt(0, 180)}`,
     country: getRandomElement(movieCountries),
-    genre: getRandomElement(movieGenres),
-    otherGenre: getRandomArray(movieOtherGenres, 2).join(`, `),
-    description: limitedDescription,
-    fullDescription,
-    comments: Array.from({length: getRandomInt(0, 5)}, generatePopapComment)
+    mainGenre: randomGenres[0],
+    otherGenres: randomGenres.slice(1),
+    description: getRandomSubarray(movieDescriptions, 5),
+    comments: generateCommentsArray()
   };
 };
 
 export const movieCardsData = Array.from({length: getRandomInt(15, 20)}, generateMovieCard);
+
 

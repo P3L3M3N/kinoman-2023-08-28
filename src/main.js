@@ -1,13 +1,16 @@
-import {createUserRankTemplate} from './components/user-rank.js';
-import {watchedMoviesCount} from './mock/user-data.js';
+import {createUserProfileTemplate} from './components/user-profile.js';
+import {
+  generateUserProfile,
+  getWatchCount
+} from './mock/user-profile-data.js';
 import {createMenuTemplate} from './components/menu.js';
 import {createSortListTemplate} from './components/sort-list.js';
 import {
   createUpcomingMoviesTemplate,
   createButtonShowMoreTemplate
-} from './components/upcoming-movies.js';
+} from './components/upcoming-movies-wrap.js';
 import {createMovieCardTemplate} from './components/movie-card.js';
-import {createExtraMoviesTemplate} from './components/extra-movies.js';
+import {createExtraMoviesTemplate} from './components/extra-movies-wrap.js';
 import {createFooterStatisticTemplate} from './components/footer-statistic.js';
 import {createMovieInformationTemplate} from './components/movie-card-popap.js';
 import {createMovieInfoCommentsTemplate} from './components/movie-coment.js';
@@ -62,7 +65,10 @@ const render = (container, template, movieCardInfo = null, place = `beforeend`) 
   }
 };
 
-render(siteHeaderElement, createUserRankTemplate(watchedMoviesCount));
+const watchedMoviesCount = getWatchCount();
+const userProfile = generateUserProfile(watchedMoviesCount);
+
+render(siteHeaderElement, createUserProfileTemplate(userProfile));
 
 render(siteMainElement, [
   createMenuTemplate(),

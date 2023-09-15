@@ -1,18 +1,19 @@
 import {
+  getRandomInt,
   getRandomElement,
   getRandomDate,
 } from '../utils.js';
 
 const START_COMMENT_YEAR = 2022;
 
-export const movieEmojis = [
+const movieEmojis = [
   `smile`,
   `sleeping`,
   `puke`,
   `angry`
 ];
 
-export const movieCommentMessages = [
+const movieCommentMessages = [
   `So confusing, I was trying to keep up with the plot.`,
   `Captivating story and excellent performances`,
   `Yawn-inducing from start to finish`,
@@ -25,7 +26,7 @@ export const movieCommentMessages = [
   `Not my cup of tea`
 ];
 
-export const movieCommentAuthors = [
+const movieCommentAuthors = [
   `Cinephile42`,
   `MovieBuff1995`,
   `ScreenQueen`,
@@ -35,7 +36,7 @@ export const movieCommentAuthors = [
   `ReelLifeCritic`
 ];
 
-export const generatePopapComment = () => {
+const generatePopapComments = () => {
   const generatedDate = getRandomDate(START_COMMENT_YEAR, new Date());
 
   return {
@@ -46,3 +47,4 @@ export const generatePopapComment = () => {
   };
 };
 
+export const generateCommentsArray = () => Array.from({length: getRandomInt(0, 5)}, generatePopapComments);
