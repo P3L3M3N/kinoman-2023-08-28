@@ -6,8 +6,7 @@ import {
   getRandomDate,
 } from '../utils.js';
 import {generateCommentsArray} from './movie-comment-data.js';
-
-const START_MOVIE_YEAR = 1930;
+import {START_MOVIE_YEAR} from '../constants.js';
 
 const movieTitles = [
   `Made for Each`,

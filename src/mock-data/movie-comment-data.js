@@ -3,8 +3,7 @@ import {
   getRandomElement,
   getRandomDate,
 } from '../utils.js';
-
-const START_COMMENT_YEAR = 2022;
+import {START_COMMENT_YEAR} from '../constants.js';
 
 const movieEmojis = [
   `smile`,

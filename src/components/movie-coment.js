@@ -2,7 +2,7 @@ import {
   getFormatDate
 } from '../utils.js';
 
-export const createMovieInfoCommentsTemplate = ({
+export const createMovieCommentsTemplate = ({
   emoji,
   message,
   author,

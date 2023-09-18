@@ -1,146 +1,75 @@
-import {createUserProfileTemplate} from './components/user-profile.js';
-import {
-  generateUserProfile,
-  getWatchCount
-} from './mock/user-profile-data.js';
-import {createMenuTemplate} from './components/menu.js';
-import {createSortListTemplate} from './components/sort-list.js';
-import {
-  createUpcomingMoviesTemplate,
-  createButtonShowMoreTemplate
-} from './components/upcoming-movies-wrap.js';
-import {createMovieCardTemplate} from './components/movie-card.js';
-import {createExtraMoviesTemplate} from './components/extra-movies-wrap.js';
-import {createFooterStatisticTemplate} from './components/footer-statistic.js';
-import {createMovieInformationTemplate} from './components/movie-card-popap.js';
-import {createMovieInfoCommentsTemplate} from './components/movie-coment.js';
-import {onEscKeyDown} from './utils.js';
-import {movieCardsData} from './mock/movie-card-data.js';
-
-const UPCOMING_MOVIES_CARD_COUNT = 5;
-const TOP_RATED_MOVIES_CARD_COUNT = 2;
-const MOST_COMMENTED_MOVIES_CARD_COUNT = 2;
-const SHOW_MORE_COUNT = 5;
-
-
-const siteBodyElement = document.querySelector(`body`);
-const siteHeaderElement = siteBodyElement.querySelector(`.header`);
-const siteMainElement = siteBodyElement.querySelector(`.main`);
-const siteFooterElement = siteBodyElement.querySelector(`.footer`);
+/**
+ * @fileOverview Главный модуль, проекта «Киноман».
+ * [Техническое задание](https://github.com/P3L3M3N/kinoman-2023-08-28/blob/main/README.md)
+ * [Базовые критерии](https://github.com/P3L3M3N/kinoman-2023-08-28/blob/main/tasks/basic-criteria.md)
+ * [Дополнительные критерии](https://github.com/P3L3M3N/kinoman-2023-08-28/blob/main/tasks/additional-criteria.md)
+ */
 
 /**
- * Отрисовывает HTML-шаблон в заданный контейнер.
- * Если передан объект movieCardInfo, добавляет обработчик событий для показа подробной информации о фильме.
- *
- * @param {Element} container DOM-элемент, в который будет отрисован шаблон.
- * @param {string|string[]} template HTML-шаблон или массив шаблонов для вставки.
- * @param {Object|null} [movieCardInfo=null] Информация о карточке фильма для обработки событий (необязательный параметр).
- * @param {string} [place=`beforeend`] Позиция вставки (соответствует параметрам метода `Element.insertAdjacentHTML`).
- *                                     По умолчанию "beforeend". Может принимать значение: "afterbegin".
+ * Импортирование компонентов интерфейса, логики управления интерфейсом и моковых данных.
  */
-const render = (container, template, movieCardInfo = null, place = `beforeend`) => {
-  if (Array.isArray(template)) {
-    template.forEach((element) => {
-      container.insertAdjacentHTML(place, element);
-    });
-  } else {
-    container.insertAdjacentHTML(place, template);
-  }
+import {createUserProfileTemplate} from './components/user-profile.js';
+import {createMenuTemplate} from './components/menu.js';
+import {createSortListTemplate} from './components/sort-list.js';
+import {createUpcomingMoviesTemplate} from './components/upcoming-movies-wrap.js';
+import {createMovieCardTemplate} from './components/movie-card.js';
+import {createFooterStatisticTemplate} from './components/footer-statistic.js';
+import {initPopup} from './interface-logic/popap-logic.js';
+import {userProfileData} from './interface-logic/user-profile-logic.js';
+import {
+  renderTemplate,
+  renderDynamic
+} from './interface-logic/render-logic.js';
+import {
+  initUpcomingMovieCards,
+  initShowMoreButton,
+  initExtraMovieBlocks
+} from './interface-logic/movies-card-logic.js';
+import {movieCardsData} from './mock-data/movie-card-data.js';
 
-  if (movieCardInfo) {
-    const lastAddedCard = container.lastElementChild;
-    lastAddedCard.addEventListener(`click`, () => {
-      const movieCardDetails = createMovieInformationTemplate(movieCardInfo);
-      siteBodyElement.insertAdjacentHTML(`beforeend`, movieCardDetails);
+/**
+ * Получение ссылок на основные DOM-элементы страницы.
+ */
+const siteBodyElement = document.querySelector(`body`);
+const siteHeaderElement = document.querySelector(`.header`);
+const siteMainElement = document.querySelector(`.main`);
+const siteFooterElement = document.querySelector(`.footer`);
 
-      const comments = movieCardInfo.comments;
-      const renderedComments = comments.map(createMovieInfoCommentsTemplate).join(`\n`);
-      const commentsListElement = siteBodyElement.querySelector(`.film-details__comments-list`);
-      if (commentsListElement) {
-        commentsListElement.insertAdjacentHTML(`beforeend`, renderedComments);
-      }
+/**
+ * Инициализация данных профиля пользователя в шапке сайта.
+ */
+renderTemplate(siteHeaderElement, createUserProfileTemplate(userProfileData));
 
-      siteBodyElement.addEventListener(`keydown`, onEscKeyDown);
-    });
-  }
-};
-
-const watchedMoviesCount = getWatchCount();
-const userProfile = generateUserProfile(watchedMoviesCount);
-
-render(siteHeaderElement, createUserProfileTemplate(userProfile));
-
-render(siteMainElement, [
+/**
+ * Инициализация основных элементов интерфейса сайта.
+ */
+renderTemplate(siteMainElement, [
   createMenuTemplate(),
   createSortListTemplate(),
   createUpcomingMoviesTemplate()
 ]);
 
+/**
+ * Получение DOM-элементов основной секции с карточками фильмов.
+ */
 const moviesBlockElement = siteMainElement.querySelector(`.films`);
 const moviesListElement = moviesBlockElement.querySelector(`.films-list`);
 const moviesContainerElement = moviesListElement.querySelector(`.films-list__container`);
 
-movieCardsData.slice(0, UPCOMING_MOVIES_CARD_COUNT).forEach((movieCardInfo) => {
-  render(moviesContainerElement, createMovieCardTemplate(movieCardInfo), movieCardInfo);
-});
+/**
+ * Инициализация карточек фильмов и кнопки "Show more".
+ */
+initUpcomingMovieCards(moviesContainerElement, movieCardsData, renderDynamic, createMovieCardTemplate);
+initExtraMovieBlocks(moviesBlockElement, movieCardsData, renderDynamic, createMovieCardTemplate);
+initShowMoreButton(moviesListElement, moviesContainerElement, movieCardsData, renderDynamic, createMovieCardTemplate);
 
-render(moviesListElement, createButtonShowMoreTemplate());
+/**
+ * Инициализация всплывающего окна с деталями фильма.
+ */
+initPopup(siteBodyElement, `.film-details`, `.film-details__close-btn`);
 
-let currentShowCount = UPCOMING_MOVIES_CARD_COUNT;
-
-const showMoreMoviesCard = () => {
-  const additionalMoviesCard = movieCardsData.slice(currentShowCount, currentShowCount + SHOW_MORE_COUNT);
-  additionalMoviesCard.forEach((movieCardInfo) => {
-    render(moviesContainerElement, createMovieCardTemplate(movieCardInfo), movieCardInfo);
-  });
-
-  currentShowCount += SHOW_MORE_COUNT;
-
-  if (currentShowCount >= movieCardsData.length) {
-    const showMoreButton = moviesListElement.querySelector(`.films-list__show-more`);
-    if (showMoreButton) {
-      showMoreButton.remove();
-    }
-  }
-};
-
-const showMoreButton = moviesListElement.querySelector(`.films-list__show-more`);
-if (showMoreButton) {
-  showMoreButton.addEventListener(`click`, showMoreMoviesCard);
-}
-
-const topRatedTemplate = createExtraMoviesTemplate(`Top rated`);
-const mostCommentedTemplate = createExtraMoviesTemplate(`Most commented`);
-render(moviesBlockElement, [topRatedTemplate, mostCommentedTemplate]);
-
-const [topRatedContainer, mostCommentedContainer] = moviesBlockElement.querySelectorAll(`.films-list--extra .films-list__container`);
-
-const topRatedMovies = [...movieCardsData].sort((a, b) => b.rating - a.rating).slice(0, TOP_RATED_MOVIES_CARD_COUNT);
-topRatedMovies.forEach((movieCardInfo) => {
-  render(topRatedContainer, createMovieCardTemplate(movieCardInfo), movieCardInfo);
-});
-
-const mostCommentedMovies = [...movieCardsData].sort((a, b) => b.comments.length - a.comments.length).slice(0, MOST_COMMENTED_MOVIES_CARD_COUNT);
-mostCommentedMovies.forEach((movieCardInfo) => {
-  render(mostCommentedContainer, createMovieCardTemplate(movieCardInfo), movieCardInfo);
-});
-
+/**
+ * Инициализация статистики в футере сайта.
+ */
 const footerStatisticElement = siteFooterElement.querySelector(`.footer__statistics`);
-render(footerStatisticElement, createFooterStatisticTemplate(movieCardsData.length));
-
-const closeMoviePopup = () => {
-  const popupElement = siteBodyElement.querySelector(`.film-details`);
-  if (popupElement) {
-    popupElement.remove();
-    siteBodyElement.removeEventListener(`keydown`, onEscKeyDown);
-  }
-};
-
-const closePopupOnClick = (evt) => {
-  if (evt.target.matches(`.film-details__close-btn`)) {
-    closeMoviePopup();
-  }
-};
-
-siteBodyElement.addEventListener(`keydown`, (evt) => onEscKeyDown(evt, closeMoviePopup));
-siteBodyElement.addEventListener(`click`, closePopupOnClick);
+renderTemplate(footerStatisticElement, createFooterStatisticTemplate(movieCardsData.length));

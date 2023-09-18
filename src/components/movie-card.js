@@ -2,8 +2,8 @@ import {
   getFormatDate,
   getFormatDuration
 } from '../utils.js';
+import {MAX_DESCRIPTION_LENGTH} from '../constants.js';
 
-const MAX_DESCRIPTION_LENGTH = 140;
 
 export const createMovieCardTemplate = ({
   title,
