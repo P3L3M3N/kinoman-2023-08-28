@@ -1,7 +1,4 @@
-import {
-  getFormatDate,
-  getFormatDuration
-} from '../utils.js';
+import {getFormatDuration} from '../utils.js';
 import {createMovieCommentFormTemplate} from './movie-coment-form.js';
 
 export const createMovieCardPopapTemplate = ({
@@ -62,7 +59,8 @@ export const createMovieCardPopapTemplate = ({
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${getFormatDate(releaseDate, {day: true, month: true, year: true})}</td>
+              <td class="film-details__cell">${releaseDate.getDate()} ${releaseDate.toLocaleString(`en-US`, {month: `long`})} ${releaseDate.getFullYear()}</td>
+
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>

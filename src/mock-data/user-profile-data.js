@@ -1,5 +1,6 @@
 import {getRandomInt} from "../utils.js";
-import {MAX_WATCHED_MOVIES} from '../constants.js';
+
+const MAX_WATCHED_MOVIES = 25;
 
 export const userAvatar = [`bitmap@2x.png`];
 

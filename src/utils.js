@@ -1,21 +1,4 @@
 /**
- * @fileOverview Модуль утилит.
- * Для генерации случайных чисел, работы с датами,
- * форматирования строк и обработки событий клавиатуры.
- */
-
-/**
- * Импортирование констант
- */
-import {
-  START_YEAR_DAY,
-  START_YEAR_MONTH,
-  RANDOM_SORT_THRESHOLD,
-  MIN_HOURS,
-  MINUTES_IN_HOUR
-} from './constants.js';
-
-/**
 * Возвращает случайное целое число между min и max (включительно).
 *
 * @param {number} min - Минимальное значение.
@@ -43,50 +26,18 @@ export const getRandomFloat = (min, max, precision = 1) => parseFloat((Math.rand
 export const getRandomElement = (array) => array[getRandomInt(0, array.length - 1)];
 
 /**
-* Генерирует случайную дату между заданными годами.
+* Генерирует случайную дату между заданными датами.
 *
-* @param {number} [startYear=new Date().getFullYear()] - Начальный год для генерации случайной даты.
-* @param {Date} [endDateTime=new Date()] - Конечная дата и время для генерации случайной даты.
-* @return {Date} Случайная дата между заданными годами.
+* @param {Date} [startDateTime] - Начальная дата для генерации. По умолчанию это текущая дата минус 2 недели.
+* @param {Date} [endDateTime] - Конечная дата для генерации. По умолчанию это текущая дата.
+* @return {Date} Случайная дата между заданными датами.
 */
-export const getRandomDate = (startYear = new Date().getFullYear(), endDateTime = new Date()) => {
-  const start = new Date(startYear, START_YEAR_MONTH, START_YEAR_DAY);
+export const getRandomDate = (
+    startDateTime = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+    endDateTime = new Date()
+) => {
 
-  return new Date(start.getTime() + Math.random() * (endDateTime.getTime() - start.getTime()));
-};
-
-/**
-* Форматирует объект Date в строку в соответствии с заданным форматом.
-*
-* @param {Date} date - Объект Date, который нужно отформатировать.
-* @param {Object} formatOptions - Объект с параметрами форматирования.
-* @return {string} Отформатированная строка с датой.
-*/
-export const getFormatDate = (date, formatOptions) => assembleDate(date, formatOptions);
-
-/**
-* Собирает отформатированную дату из объекта Date и опций форматирования.
-*
-* @param {Date} date - Объект Date, который нужно отформатировать.
-* @param {Object} options - Объект с параметрами форматирования.
-* @return {string} Отформатированная строка с датой.
-*/
-const assembleDate = (date, options) => {
-  const assembledDate = [];
-
-  if (options.day) {
-    assembledDate.push(date.getDate());
-  }
-
-  if (options.month) {
-    assembledDate.push(date.toLocaleString(`en-US`, {month: `long`}));
-  }
-
-  if (options.year) {
-    assembledDate.push(date.getFullYear());
-  }
-
-  return assembledDate.join(` `);
+  return new Date(getRandomInt(startDateTime.getTime(), endDateTime.getTime()));
 };
 
 /**
@@ -95,7 +46,7 @@ const assembleDate = (date, options) => {
 * @param {Array} array - Исходный массив.
 * @return {Array} Перемешанный массив.
 */
-export const toShuffledArray = (array) => [...array].sort(() => Math.random() - RANDOM_SORT_THRESHOLD);
+export const toShuffledArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
 /**
 * Возвращает случайный подмассив из заданного массива с заданным максимальным количеством элементов.
@@ -104,7 +55,7 @@ export const toShuffledArray = (array) => [...array].sort(() => Math.random() - 
 * @param {number} n - Максимальное количество элементов в подмассиве.
 * @return {Array} Подмассив, состоящий из случайных элементов исходного массива.
 */
-export const getRandomSubarray = (array, n) => {
+export const getRandomShuffledSubarray = (array, n) => {
   const shuffled = toShuffledArray(array);
   const arrayLength = getRandomInt(1, n);
 
@@ -118,10 +69,10 @@ export const getRandomSubarray = (array, n) => {
 * @return {string} Отформатированная строка с продолжительностью.
 */
 export const getFormatDuration = (durationMinutes) => {
-  const hours = Math.max(MIN_HOURS, Math.floor(durationMinutes / MINUTES_IN_HOUR));
-  const minutes = durationMinutes % MINUTES_IN_HOUR;
+  const hours = Math.floor(durationMinutes / 60);
+  const minutes = durationMinutes % 60;
 
-  return `${hours}h ${minutes}m`;
+  return `${hours ? `${hours}h` : ``} ${minutes}m`;
 };
 
 /**

@@ -2,6 +2,11 @@
 
 * Студент: [P3L3M3N](https://github.com/P3L3M3N).
 * Наставник: [BeHustle](https://github.com/BeHustle).
+ 
+#### Критерии проекта:
+ * [Базовые критерии](https://github.com/P3L3M3N/kinoman-2023-08-28/blob/main/tasks/basic-criteria.md)
+ * [Дополнительные критерии](https://github.com/P3L3M3N/kinoman-2023-08-28/blob/main/tasks/additional-criteria.md)
+  
 #### Техническое задание проекта:
 
 ##### О проекте

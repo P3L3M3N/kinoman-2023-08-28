@@ -1,16 +1,9 @@
+import {Emojis} from '../constants.js';
 import {
   getRandomInt,
   getRandomElement,
   getRandomDate,
 } from '../utils.js';
-import {START_COMMENT_YEAR} from '../constants.js';
-
-const movieEmojis = [
-  `smile`,
-  `sleeping`,
-  `puke`,
-  `angry`
-];
 
 const movieCommentMessages = [
   `So confusing, I was trying to keep up with the plot.`,
@@ -36,14 +29,14 @@ const movieCommentAuthors = [
 ];
 
 const generatePopapComments = () => {
-  const generatedDate = getRandomDate(START_COMMENT_YEAR, new Date());
 
   return {
-    emoji: getRandomElement(movieEmojis),
+    emoji: getRandomElement(Object.values(Emojis)),
     message: getRandomElement(movieCommentMessages),
     author: getRandomElement(movieCommentAuthors),
-    date: generatedDate
+    date: getRandomDate(new Date(2022, 0, 1), new Date())
   };
 };
+
 
 export const generateCommentsArray = () => Array.from({length: getRandomInt(0, 5)}, generatePopapComments);

@@ -2,11 +2,10 @@ import {
   getRandomInt,
   getRandomFloat,
   getRandomElement,
-  getRandomSubarray,
+  getRandomShuffledSubarray,
   getRandomDate,
 } from '../utils.js';
 import {generateCommentsArray} from './movie-comment-data.js';
-import {START_MOVIE_YEAR} from '../constants.js';
 
 const movieTitles = [
   `Made for Each`,
@@ -32,11 +31,11 @@ const moviePosters = [
 ];
 
 const movieAgeLimits = [
-  `0`,
-  `6`,
-  `12`,
-  `16`,
-  `18`
+  0,
+  6,
+  12,
+  16,
+  18
 ];
 
 const movieDirectors = [
@@ -112,8 +111,7 @@ const movieDescriptions = [
 ];
 
 const generateMovieCard = () => {
-  const generatedDate = getRandomDate(START_MOVIE_YEAR, new Date());
-  const randomGenres = getRandomSubarray(movieGenres, 3);
+  const randomGenres = getRandomShuffledSubarray(movieGenres, 3);
 
   return {
     title: getRandomElement(movieTitles),
@@ -121,14 +119,14 @@ const generateMovieCard = () => {
     ageLimit: getRandomElement(movieAgeLimits),
     rating: getRandomFloat(0, 10),
     director: getRandomElement(movieDirectors),
-    writers: getRandomSubarray(movieWriters, 3),
-    actors: getRandomSubarray(movieActors, 3),
-    releaseDate: generatedDate,
+    writers: getRandomShuffledSubarray(movieWriters, 3),
+    actors: getRandomShuffledSubarray(movieActors, 3),
+    releaseDate: getRandomDate(new Date(1950, 0, 1), new Date()),
     duration: `${getRandomInt(0, 180)}`,
     country: getRandomElement(movieCountries),
     mainGenre: randomGenres[0],
     otherGenres: randomGenres.slice(1),
-    description: getRandomSubarray(movieDescriptions, 5),
+    description: getRandomShuffledSubarray(movieDescriptions, 5),
     comments: generateCommentsArray()
   };
 };
