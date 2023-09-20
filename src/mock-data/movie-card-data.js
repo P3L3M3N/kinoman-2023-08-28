@@ -115,14 +115,14 @@ const generateMovieCard = () => {
 
   return {
     title: getRandomElement(movieTitles),
-    posterLink: `${getRandomElement(moviePosters)}`,
+    posterLink: getRandomElement(moviePosters),
     ageLimit: getRandomElement(movieAgeLimits),
     rating: getRandomFloat(0, 10),
     director: getRandomElement(movieDirectors),
     writers: getRandomShuffledSubarray(movieWriters, 3),
     actors: getRandomShuffledSubarray(movieActors, 3),
     releaseDate: getRandomDate(new Date(1950, 0, 1), new Date()),
-    duration: `${getRandomInt(0, 180)}`,
+    duration: getRandomInt(0, 180),
     country: getRandomElement(movieCountries),
     mainGenre: randomGenres[0],
     otherGenres: randomGenres.slice(1),

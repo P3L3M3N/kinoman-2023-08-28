@@ -1,5 +1,6 @@
 import {
-  getFormatDuration
+  getFormatDuration,
+  getFormattedDate
 } from '../utils.js';
 
 
@@ -21,7 +22,7 @@ export const createMovieCardTemplate = ({
       <h3 class="film-card__title">${title}</h3>
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
-        <span class="film-card__year">${releaseDate.getFullYear()}</span>
+        <span class="film-card__year">${getFormattedDate(releaseDate, `YYYY`)}</span>
         <span class="film-card__duration">${getFormatDuration(duration)}</span>
         <span class="film-card__genre">${mainGenre}</span>
       </p>

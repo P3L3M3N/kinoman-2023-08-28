@@ -2,7 +2,11 @@ export const createUserProfileTemplate = ({
   avatar,
   rank
 }) => {
-  const optionalRank = rank ? `<p class="profile__rating">${rank}</p>` : ``;
+  let optionalRank = `<p class="profile__rating">${rank}</p>`;
+
+  if (rank === ``) {
+    optionalRank = ``;
+  }
 
   return (/* html */
     `<section class="header__profile profile">

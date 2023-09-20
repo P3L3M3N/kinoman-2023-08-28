@@ -1,3 +1,5 @@
+import {getFormattedDate} from "../utils";
+
 export const createMovieCommentsTemplate = ({
   emoji,
   message,
@@ -13,7 +15,7 @@ export const createMovieCommentsTemplate = ({
       <p class="film-details__comment-text">${message}</p>
       <p class="film-details__comment-info">
         <span class="film-details__comment-author">${author}</span>
-        <span class="film-details__comment-day">${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, `0`)}/${String(date.getDate()).padStart(2, `0`)} ${String(date.getHours()).padStart(2, `0`)}:${String(date.getMinutes()).padStart(2, `0`)}</span>
+        <span class="film-details__comment-day">${getFormattedDate(date, `YYYY/MM/DD HH:mm`)}</span>
         <button class="film-details__comment-delete">Delete</button>
       </p>
     </div>

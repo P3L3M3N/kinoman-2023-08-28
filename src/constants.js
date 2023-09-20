@@ -19,14 +19,24 @@ export const ITEMS_PER_EXTRA_BLOCKS = 2;
 /**
 * Объект, хранящий доступные эмодзи для сайта.
 * @typedef {Object} Emojis
-* @property {string} Smile - Эмодзи улыбки.
-* @property {string} Sleeping - Эмодзи сна.
-* @property {string} Puke - Эмодзи рвоты.
-* @property {string} Angry - Эмодзи злости.
+* @property {string} SMILE - Эмодзи улыбки.
+* @property {string} SLEEPING - Эмодзи сна.
+* @property {string} PUKE - Эмодзи рвоты.
+* @property {string} ANGRY - Эмодзи злости.
 */
 export const Emojis = {
-  Smile: `smile`,
-  Sleeping: `sleeping`,
-  Puke: `puke`,
-  Angry: `angry`,
+  SMILE: `smile`,
+  SLEEPING: `sleeping`,
+  PUKE: `puke`,
+  ANGRY: `angry`
 };
+
+/**
+ * Объект с пороговыми значениями и названиями рангов для определения ранга пользователя.
+ * @type {{breakpoints: number[], names: string[]}}
+ */
+export const rankThreshold = {
+  breakpoints: [0, 10, 20],
+  names: [``, `Novice`, `Fan`, `Movie Buff`]
+};
+

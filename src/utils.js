@@ -1,3 +1,5 @@
+import {rankThreshold} from './constants.js';
+
 /**
 * Возвращает случайное целое число между min и max (включительно).
 *
@@ -38,6 +40,30 @@ export const getRandomDate = (
 ) => {
 
   return new Date(getRandomInt(startDateTime.getTime(), endDateTime.getTime()));
+};
+
+/**
+ * Возвращает отформатированную строку даты и времени.
+ *
+ * @param {Date} date - Объект даты для форматирования.
+ * @param {String} [format='DD MM YYYY HH:mm'] - Строка формата даты и времени по умолчанию.
+ * @return {String} Отформатированная строка даты.
+ */
+export const getFormattedDate = (date, format = `DD MM YYYY HH:mm`) => {
+  const day = String(date.getDate()).padStart(2, `0`);
+  const month = String(date.getMonth() + 1).padStart(2, `0`);
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, `0`);
+  const minutes = String(date.getMinutes()).padStart(2, `0`);
+  const longMonth = date.toLocaleString(`en-US`, {month: `long`});
+
+  return format
+    .replace(`DD`, day)
+    .replace(`MM`, month)
+    .replace(`YYYY`, year)
+    .replace(`HH`, hours)
+    .replace(`mm`, minutes)
+    .replace(`Month`, longMonth);
 };
 
 /**
@@ -96,4 +122,21 @@ export const onKeyDown = (evt, action, ...keys) => {
   if (keys.includes(evt.key)) {
     action();
   }
+};
+
+/**
+ * Генерирует ранг пользователя на основе количества просмотренных фильмов.
+ *
+ * @param {number} watchedMoviesCount - Количество просмотренных фильмов.
+ * @return {string} Ранг пользователя.
+ */
+export const getUserRank = (watchedMoviesCount) => {
+  for (let i = 0; i < rankThreshold.breakpoints.length; i++) {
+    if (watchedMoviesCount <= rankThreshold.breakpoints[i]) {
+
+      return rankThreshold.names[i];
+    }
+  }
+
+  return rankThreshold.names[rankThreshold.names.length - 1];
 };
