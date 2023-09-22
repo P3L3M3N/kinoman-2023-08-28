@@ -1,17 +1,21 @@
 import {movieCardsData} from '../mock-data/movie-card-data.js';
 
 export const menuItemsStaticData = [{
+  type: `all`,
   anchor: `all`,
-  name: `All movies`,
+  name: `All movies`
 }, {
+  type: `watchlist`,
   anchor: `watchlist`,
-  name: `Watchlist`,
+  name: `Watchlist`
 }, {
+  type: `history`,
   anchor: `history`,
-  name: `History`,
+  name: `History`
 }, {
+  type: `favorites`,
   anchor: `favorites`,
-  name: `Favorites`,
+  name: `Favorites`
 }];
 
 export const menuItemsDynamicData = {
@@ -21,7 +25,7 @@ export const menuItemsDynamicData = {
     history: 4,
     favorites: 8
   },
-  activeItem: `all`
+  activeItemType: `all`
 };
 
 const createMenuItemTemplate = (item, isActive, count) => {
@@ -36,7 +40,7 @@ export const createMenuTemplate = (staticData, dynamicData) => {
   const menuItems = [];
 
   for (const item of staticData) {
-    const isActive = item.anchor === dynamicData.activeItem;
+    const isActive = item.type === dynamicData.activeItemType;
     const count = dynamicData.itemCounts[item.anchor];
     menuItems.push(createMenuItemTemplate(item, isActive, count));
   }

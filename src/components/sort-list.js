@@ -1,28 +1,37 @@
-const createSortButtonTemplate = ({
-  sortType,
-  isActive
-}) => {
+export const sortButtonStaticData = [{
+  type: `default`,
+  name: `Sort by default`
+}, {
+  type: `date`,
+  name: `Sort by date`
+}, {
+  type: `rating`,
+  name: `Sort by rating`
+}];
+
+export const sortButtonDynamicData = {
+  activeButtonType: `date`
+};
+
+const createSortButtonTemplate = (button, isActive) => {
   return (/* html */
-    `<li><a href="#" class="sort__button ${isActive ? `sort__button--active` : ``}">${sortType}</a></li>`
+    `<li><a href="#" class="sort__button ${isActive ? `sort__button--active` : ``}">${button.name}</a></li>`
   );
 };
 
-export const createSortListTemplate = () => {
-  const sortButtons = sortOptions.map(createSortButtonTemplate).join(``);
+export const createSortListTemplate = (staticData, dynamicData) => {
+  const sortButtons = [];
+
+  for (const button of staticData) {
+    const isActive = button.type === dynamicData.activeButtonType;
+    sortButtons.push(createSortButtonTemplate(button, isActive));
+  }
+
+  const sortButtonsTemplate = sortButtons.join(``);
+
   return (/* html */
     `<ul class="sort">
-      ${sortButtons}
+      ${sortButtonsTemplate}
     </ul>`
   );
 };
-
-const sortOptions = [{
-  sortType: `Sort by default`,
-  isActive: true
-}, {
-  sortType: `Sort by date`,
-  isActive: false
-}, {
-  sortType: `Sort by rating`,
-  isActive: false
-}];

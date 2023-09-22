@@ -4,7 +4,11 @@ import {
   menuItemsStaticData,
   menuItemsDynamicData
 } from './components/menu.js';
-import {createSortListTemplate} from './components/sort-list.js';
+import {
+  createSortListTemplate,
+  sortButtonStaticData,
+  sortButtonDynamicData
+} from './components/sort-list.js';
 import {createUpcomingMoviesTemplate} from './components/upcoming-movies-wrap.js';
 import {createMovieCardTemplate} from './components/movie-card.js';
 import {createFooterStatisticTemplate} from './components/footer-statistic.js';
@@ -32,7 +36,7 @@ renderTemplate(siteHeaderElement, createUserProfileTemplate(userProfileData));
 
 renderTemplate(siteMainElement, [
   createMenuTemplate(menuItemsStaticData, menuItemsDynamicData),
-  createSortListTemplate(),
+  createSortListTemplate(sortButtonStaticData, sortButtonDynamicData),
   createUpcomingMoviesTemplate()
 ]);
 
