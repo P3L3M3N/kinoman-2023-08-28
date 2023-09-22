@@ -1,47 +1,54 @@
-const createMenuItemTemplate = ({
-  anchor,
-  name,
-  isActive,
-  count
-}) => {
+import {movieCardsData} from '../mock-data/movie-card-data.js';
+
+export const menuItemsStaticData = [{
+  anchor: `all`,
+  name: `All movies`,
+}, {
+  anchor: `watchlist`,
+  name: `Watchlist`,
+}, {
+  anchor: `history`,
+  name: `History`,
+}, {
+  anchor: `favorites`,
+  name: `Favorites`,
+}];
+
+export const menuItemsDynamicData = {
+  itemCounts: {
+    all: movieCardsData.length,
+    watchlist: 13,
+    history: 4,
+    favorites: 8
+  },
+  activeItem: `all`
+};
+
+const createMenuItemTemplate = (item, isActive, count) => {
   return (/* html */
-    `<a href="#${anchor}" class="main-navigation__item ${isActive ? `main-navigation__item--active` : ``}">
-    ${name}
-    ${count !== null ? `<span class="main-navigation__item-count">${count}</span>` : ``}
+    `<a href="#${item.anchor}" class="main-navigation__item ${isActive ? `main-navigation__item--active` : ``}">
+      ${item.name} ${count !== null ? `<span class="main-navigation__item-count">${count}</span>` : ``}
     </a>`
   );
 };
 
-const itemElements = [{
-  anchor: `all`,
-  name: `All movies`,
-  isActive: true,
-  count: null
-}, {
-  anchor: `watchlist`,
-  name: `Watchlist`,
-  isActive: false,
-  count: 13
-}, {
-  anchor: `history`,
-  name: `History`,
-  isActive: false,
-  count: 4
-}, {
-  anchor: `favorites`,
-  name: `Favorites`,
-  isActive: false,
-  count: 8
-}];
+export const createMenuTemplate = (staticData, dynamicData) => {
+  const menuItems = [];
 
-export const createMenuTemplate = () => {
-  const menuItems = itemElements.map(createMenuItemTemplate).join(``);
+  for (const item of staticData) {
+    const isActive = item.anchor === dynamicData.activeItem;
+    const count = dynamicData.itemCounts[item.anchor];
+    menuItems.push(createMenuItemTemplate(item, isActive, count));
+  }
+
+  const menuItemsTemplate = menuItems.join(``);
+
   return (/* html */
     `<nav class="main-navigation">
       <div class="main-navigation__items">
-        ${menuItems}
+        ${menuItemsTemplate}
       </div>
-      <a href="#stats" class="main-navigation__additional"> Stats </a>
+      <a href="#stats" class="main-navigation__additional">Stats</a>
     </nav>`
   );
 };

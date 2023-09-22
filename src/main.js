@@ -1,5 +1,9 @@
 import {createUserProfileTemplate} from './components/user-profile.js';
-import {createMenuTemplate} from './components/menu.js';
+import {
+  createMenuTemplate,
+  menuItemsStaticData,
+  menuItemsDynamicData
+} from './components/menu.js';
 import {createSortListTemplate} from './components/sort-list.js';
 import {createUpcomingMoviesTemplate} from './components/upcoming-movies-wrap.js';
 import {createMovieCardTemplate} from './components/movie-card.js';
@@ -27,7 +31,7 @@ renderTemplate(siteHeaderElement, createUserProfileTemplate(userProfileData));
 
 
 renderTemplate(siteMainElement, [
-  createMenuTemplate(),
+  createMenuTemplate(menuItemsStaticData, menuItemsDynamicData),
   createSortListTemplate(),
   createUpcomingMoviesTemplate()
 ]);
