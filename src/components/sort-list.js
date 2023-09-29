@@ -10,7 +10,7 @@ export const sortButtonStaticData = [{
 }];
 
 export const sortButtonDynamicData = {
-  activeButtonType: `date`
+  activeButtonType: `default`
 };
 
 const createSortButtonTemplate = (button, isActive) => {

@@ -1,10 +1,15 @@
+import {createMovieCommentsTemplate} from './movie-coment.js';
+
 export const createMovieCommentFormTemplate = (comments) => {
+  const commentsMarkup = comments.map(createMovieCommentsTemplate).join(`\n`);
+
   return (/* html */
     `<div class="form-details__bottom-container">
       <section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
 
         <ul class="film-details__comments-list">
+          ${commentsMarkup}
         </ul>
 
         <div class="film-details__new-comment">

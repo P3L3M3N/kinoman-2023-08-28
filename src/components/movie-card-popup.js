@@ -4,7 +4,7 @@ import {
 } from '../utils.js';
 import {createMovieCommentFormTemplate} from './movie-coment-form.js';
 
-export const createMovieCardPopapTemplate = ({
+export const createMovieCardPopupTemplate = ({
   posterLink,
   ageLimit,
   title,

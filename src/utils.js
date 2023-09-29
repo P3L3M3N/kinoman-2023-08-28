@@ -1,6 +1,98 @@
 import {rankThreshold} from './constants.js';
 
 /**
+ * Генерирует ранг пользователя на основе количества просмотренных фильмов.
+ *
+ * @param {number} watchedMoviesCount - Количество просмотренных фильмов.
+ * @return {string} Ранг пользователя.
+ */
+export const getUserRank = (watchedMoviesCount) => {
+  for (let i = 0; i < rankThreshold.breakpoints.length; i++) {
+    if (watchedMoviesCount <= rankThreshold.breakpoints[i]) {
+
+      return rankThreshold.names[i];
+    }
+  }
+
+  return rankThreshold.names[rankThreshold.names.length - 1];
+};
+
+/**
+* Отрисовывает HTML-шаблон в заданный контейнер.
+*
+* @param {Element} container - DOM-элемент, в который будет отрисован шаблон.
+* @param {string|string[]} template - HTML-шаблон для вставки. Может быть массивом шаблонов.
+* @param {string} [place=beforeend] - Позиция вставки (по умолчанию "beforeend").
+*/
+export const renderTemplate = (container, template, place = `beforeend`) => {
+  if (Array.isArray(template)) {
+    template.forEach((element) => {
+      container.insertAdjacentHTML(place, element);
+    });
+  } else {
+    container.insertAdjacentHTML(place, template);
+  }
+};
+
+/**
+* Обрабатывает событие нажатия клавиши Escape.
+*
+* @param {Event} evt - Событие.
+* @param {Function} action - Действие для выполнения.
+* @return {void}
+*/
+export const onEscKeyDown = (evt, action) => onKeyDown(evt, action, `Escape`, `Esc`);
+
+/**
+ * Общий обработчик нажатия клавиш.
+ *
+ * @param {Event} evt - Событие.
+ * @param {Function} action - Функция, которая будет вызвана при срабатывании события.
+ * @param {...string} keys - Клавиши, на которые нужно реагировать.
+ * @return {void}
+ */
+export const onKeyDown = (evt, action, ...keys) => {
+  if (keys.includes(evt.key)) {
+    action();
+  }
+};
+
+/**
+ * Закрывает всплывающее окно.
+ *
+ * @param {Element} siteBodyElement - DOM-элемент, в котором нужно искать всплывающее окно.
+ * @param {string} popupSelector - CSS-селектор для поиска всплывающего окна.
+ * @param {Function} [closePopupCallback] - коллбек-функция, которая будет вызвана при закрытии всплывающего окна.
+ */
+export const closePopup = (siteBodyElement, popupSelector, closePopupCallback) => {
+  const popupElement = siteBodyElement.querySelector(popupSelector);
+  if (popupElement) {
+    popupElement.remove();
+    siteBodyElement.removeEventListener(`keydown`, onEscKeyDown);
+    if (typeof closePopupCallback === `function`) {
+      closePopupCallback();
+    }
+  }
+};
+
+/**
+ * Инициализация всплывающего окна.
+ *
+ * @param {Element} siteBodyElement - DOM-элемент, в котором нужно искать всплывающее окно.
+ * @param {string} popupSelector - CSS-селектор для поиска всплывающего окна.
+ * @param {string} closeButtonSelector - CSS-селектор для поиска кнопки закрытия всплывающего окна.
+ * @param {Function} closePopupCallback - коллбек-функция, которая будет вызвана при закрытии всплывающего окна.
+ */
+export const initPopup = (siteBodyElement, popupSelector, closeButtonSelector, closePopupCallback) => {
+  siteBodyElement.addEventListener(`keydown`, (evt) => onKeyDown(evt, () => closePopup(siteBodyElement, popupSelector, closePopupCallback), `Escape`, `Esc`));
+  siteBodyElement.addEventListener(`click`, (evt) => {
+    if (evt.target.matches(closeButtonSelector)) {
+      closePopup(siteBodyElement, popupSelector, closePopupCallback);
+    }
+  });
+};
+
+/**
 * Возвращает случайное целое число между min и max (включительно).
 *
 * @param {number} min - Минимальное значение.
@@ -101,42 +193,3 @@ export const getFormatDuration = (durationMinutes) => {
   return `${hours ? `${hours}h` : ``} ${minutes}m`;
 };
 
-/**
-* Обрабатывает событие нажатия клавиши Escape.
-*
-* @param {Event} evt - Событие.
-* @param {Function} action - Действие для выполнения.
-* @return {void}
-*/
-export const onEscKeyDown = (evt, action) => onKeyDown(evt, action, `Escape`, `Esc`);
-
-/**
-* Общий обработчик нажатия клавиш.
-*
-* @param {Event} evt - Событие.
-* @param {Function} action - Функция, которая будет вызвана при срабатывании события.
-* @param {...string} keys - Клавиши, на которые нужно реагировать.
-* @return {void}
-*/
-export const onKeyDown = (evt, action, ...keys) => {
-  if (keys.includes(evt.key)) {
-    action();
-  }
-};
-
-/**
- * Генерирует ранг пользователя на основе количества просмотренных фильмов.
- *
- * @param {number} watchedMoviesCount - Количество просмотренных фильмов.
- * @return {string} Ранг пользователя.
- */
-export const getUserRank = (watchedMoviesCount) => {
-  for (let i = 0; i < rankThreshold.breakpoints.length; i++) {
-    if (watchedMoviesCount <= rankThreshold.breakpoints[i]) {
-
-      return rankThreshold.names[i];
-    }
-  }
-
-  return rankThreshold.names[rankThreshold.names.length - 1];
-};
