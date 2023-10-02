@@ -1,4 +1,4 @@
-export const sortButtonStaticData = [{
+export const sortCategories = [{
   type: `default`,
   name: `Sort by default`
 }, {
@@ -9,29 +9,23 @@ export const sortButtonStaticData = [{
   name: `Sort by rating`
 }];
 
-export const sortButtonDynamicData = {
-  activeButtonType: `default`
-};
-
 const createSortButtonTemplate = (button, isActive) => {
   return (/* html */
     `<li><a href="#" class="sort__button ${isActive ? `sort__button--active` : ``}">${button.name}</a></li>`
   );
 };
 
-export const createSortListTemplate = (staticData, dynamicData) => {
+export const createSortListTemplate = (sortType = `default`) => {
   const sortButtons = [];
 
-  for (const button of staticData) {
-    const isActive = button.type === dynamicData.activeButtonType;
+  for (const button of sortCategories) {
+    const isActive = button.type === sortType;
     sortButtons.push(createSortButtonTemplate(button, isActive));
   }
 
-  const sortButtonsTemplate = sortButtons.join(``);
-
   return (/* html */
     `<ul class="sort">
-      ${sortButtonsTemplate}
+      ${sortButtons.join(``)}
     </ul>`
   );
 };

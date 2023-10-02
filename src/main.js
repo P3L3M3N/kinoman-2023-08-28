@@ -1,20 +1,15 @@
-import {renderTemplate} from './utils.js';
+import {
+  render,
+  renderTemplate
+} from './utils.js';
 import {createUserProfileTemplate} from './components/user-profile.js';
-import {userProfileData} from './interface-logic/user-profile-logic.js';
-import {
-  createMenuTemplate,
-  menuItemsStaticData,
-  menuItemsDynamicData
-} from './components/menu.js';
-import {
-  createSortListTemplate,
-  sortButtonStaticData,
-  sortButtonDynamicData
-} from './components/sort-list.js';
-import {renderUpcomingMoviesContent} from './components/all-movies-upcoming.js';
-import {renderExtraMoviesContent} from './components/extra-movies.js';
-import {movieCardsData} from './mock-data/movie-card-data.js';
+import {userProfileData} from './mock-data/user-profile-data';
+import {createMenuTemplate} from './components/menu.js';
+import {menuData} from './mock-data/menu-data.js';
+import {createSortListTemplate} from './components/sort-list.js';
 import {createFooterStatisticTemplate} from './components/footer-statistic.js';
+import {getFilmsSection} from "./interface-logic/render-movies-section";
+import {movieCardsData} from './mock-data/movie-card-data.js';
 
 export const siteBodyElement = document.querySelector(`body`);
 export const siteHeaderElement = document.querySelector(`.header`);
@@ -24,13 +19,9 @@ export const siteFooterElement = document.querySelector(`.footer`);
 renderTemplate(siteHeaderElement, createUserProfileTemplate(userProfileData));
 
 renderTemplate(siteMainElement, [
-  createMenuTemplate(menuItemsStaticData, menuItemsDynamicData),
-  createSortListTemplate(sortButtonStaticData, sortButtonDynamicData)
+  createMenuTemplate(menuData),
+  createSortListTemplate()
 ]);
-renderUpcomingMoviesContent(siteMainElement, movieCardsData);
-renderExtraMoviesContent(siteMainElement, movieCardsData);
+render(siteMainElement, getFilmsSection(movieCardsData));
 
-siteFooterElement.replaceChildren();
 renderTemplate(siteFooterElement, createFooterStatisticTemplate(movieCardsData.length));
-
-

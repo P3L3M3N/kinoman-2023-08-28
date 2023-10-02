@@ -1,6 +1,4 @@
-import {movieCardsData} from '../mock-data/movie-card-data.js';
-
-export const menuItemsStaticData = [{
+export const menuItemCategories = [{
   type: `all`,
   anchor: `all`,
   name: `All movies`
@@ -18,16 +16,6 @@ export const menuItemsStaticData = [{
   name: `Favorites`
 }];
 
-export const menuItemsDynamicData = {
-  itemCounts: {
-    all: movieCardsData.length,
-    watchlist: 13,
-    history: 4,
-    favorites: 8
-  },
-  activeItemType: `all`
-};
-
 const createMenuItemTemplate = (item, isActive, count) => {
   return (/* html */
     `<a href="#${item.anchor}" class="main-navigation__item ${isActive ? `main-navigation__item--active` : ``}">
@@ -36,21 +24,19 @@ const createMenuItemTemplate = (item, isActive, count) => {
   );
 };
 
-export const createMenuTemplate = (staticData, dynamicData) => {
+export const createMenuTemplate = (itemsCount, activeItemType = `all`) => {
   const menuItems = [];
 
-  for (const item of staticData) {
-    const isActive = item.type === dynamicData.activeItemType;
-    const count = dynamicData.itemCounts[item.anchor];
+  for (const item of menuItemCategories) {
+    const isActive = item.type === activeItemType;
+    const count = itemsCount[item.type];
     menuItems.push(createMenuItemTemplate(item, isActive, count));
   }
-
-  const menuItemsTemplate = menuItems.join(``);
 
   return (/* html */
     `<nav class="main-navigation">
       <div class="main-navigation__items">
-        ${menuItemsTemplate}
+        ${menuItems.join(``)}
       </div>
       <a href="#stats" class="main-navigation__additional">Stats</a>
     </nav>`

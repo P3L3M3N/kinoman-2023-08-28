@@ -4,14 +4,14 @@
 */
 
 /**
-* Количество карточек, отображаемых в разделе "Upcoming movies".
+* Количество карточек, отображаемых в разделе "All movies. Upcoming".
 * При нажатии на кнопку "Show More" показывается дополнительно ITEMS_PER_PAGE карточек.
 * @constant {number}
 */
 export const ITEMS_PER_PAGE = 5;
 
 /**
-* Количество карточек, отображаемых в дополнительных блоках 'Top rated' и "Most commented".
+* Количество карточек, отображаемых в дополнительных разделах "Top rated" и "Most commented".
 * @constant {number}
 */
 export const ITEMS_PER_EXTRA_BLOCKS = 2;

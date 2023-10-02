@@ -22,7 +22,7 @@ export const attachMovieCardEvents = (moviesCardContainer, moviesCardArray) => {
       return;
     }
     renderTemplate(siteBodyElement, createMovieCardPopupTemplate(clickedMovieData));
-    initPopup(siteBodyElement, `.film-details`, `.film-details__close-btn`);
+    initPopup(`.film-details`, `.film-details__close-btn`);
     const popupCommentsContainer = siteBodyElement.querySelector(`.film-details__comments-list`);
     if (Array.isArray(clickedMovieData.comments)) {
       popupCommentsContainer.replaceChildren();
