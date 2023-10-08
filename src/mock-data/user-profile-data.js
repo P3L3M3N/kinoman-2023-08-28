@@ -13,8 +13,4 @@ const generateUserProfile = (watchedMoviesCount) => {
   };
 };
 
-/**
- * Данные профиля пользователя, сгенерированные на основе количества просмотренных фильмов.
- * @type {Object}
- */
 export const userProfileData = generateUserProfile(getWatchCount());
