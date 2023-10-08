@@ -1,16 +1,14 @@
 import {createElement} from "../utils.js";
 
-export default class FooterStatistic {
-  constructor(movieCount) {
-    this._movieCount = movieCount;
+export default class FilmsSection {
+  constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return /* html */`
-      <section class="footer__statistics">
-        <p>${this._movieCount} movies inside</p>
-      </section>`;
+    return (/* html */
+      `<section class="films"></section>`
+    );
   }
 
   getElement() {

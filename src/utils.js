@@ -27,7 +27,7 @@ export const createElement = (template) => {
   const newElement = document.createElement(`div`);
   newElement.innerHTML = template;
 
-  return newElement.firstChild;
+  return newElement.firstElementChild;
 };
 
 /**
@@ -48,22 +48,6 @@ export const render = (container, element, place = `beforeend`) => {
   }
 };
 
-/**
- * Отрисовывает HTML-шаблон в заданный контейнер.
- *
- * @param {Element} container - DOM-элемент, в который будет отрисован шаблон.
- * @param {string|string[]} template - HTML-шаблон для вставки. Может быть массивом шаблонов.
- * @param {string} [place=beforeend] - Позиция вставки (по умолчанию "beforeend").
- */
-export const renderTemplate = (container, template, place = `beforeend`) => {
-  if (Array.isArray(template)) {
-    template.forEach((element) => {
-      container.insertAdjacentHTML(place, element);
-    });
-  } else {
-    container.insertAdjacentHTML(place, template);
-  }
-};
 
 /**
  * Обрабатывает событие нажатия клавиши Escape.

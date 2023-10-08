@@ -1,3 +1,6 @@
+import {createElement} from "../utils";
+import MenuItem from "./menu-item";
+
 export const menuItemCategories = [{
   type: `all`,
   anchor: `all`,
@@ -15,30 +18,40 @@ export const menuItemCategories = [{
   anchor: `favorites`,
   name: `Favorites`
 }];
-
-const createMenuItemTemplate = (item, isActive, count) => {
-  return (/* html */
-    `<a href="#${item.anchor}" class="main-navigation__item ${isActive ? `main-navigation__item--active` : ``}">
-      ${item.name} ${count !== null ? `<span class="main-navigation__item-count">${count}</span>` : ``}
-    </a>`
-  );
-};
-
-export const createMenuTemplate = (itemsCount, activeItemType = `all`) => {
-  const menuItems = [];
-
-  for (const item of menuItemCategories) {
-    const isActive = item.type === activeItemType;
-    const count = itemsCount[item.type];
-    menuItems.push(createMenuItemTemplate(item, isActive, count));
+export default class Menu {
+  constructor(menuData, activeItemType = `all`) {
+    this._menuData = menuData;
+    this._activeItemType = activeItemType;
+    this._element = null;
   }
 
-  return (/* html */
-    `<nav class="main-navigation">
-      <div class="main-navigation__items">
-        ${menuItems.join(``)}
-      </div>
-      <a href="#stats" class="main-navigation__additional">Stats</a>
-    </nav>`
-  );
-};
+  getTemplate() {
+    const menuItems = menuItemCategories.map((item) => {
+      const isActive = item.type === this._activeItemType;
+      const count = this._menuData[item.type];
+      const menuItem = new MenuItem(item, isActive, count);
+      return menuItem.getTemplate();
+    });
+
+    return (/* html */
+      `<nav class="main-navigation">
+        <div class="main-navigation__items">
+          ${menuItems.join(``)}
+        </div>
+        <a href="#stats" class="main-navigation__additional">Stats</a>
+      </nav>`
+    );
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
+
